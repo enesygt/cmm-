@@ -9,7 +9,11 @@ enum class component_type {
     setext_heading,
     indented_code_block,
     fenced_code_block,
-    html_block
+    html_block,
+    link_reference,
+    paragraph,
+    block_quote,
+    list
 };
 
 } // namespace cmm
