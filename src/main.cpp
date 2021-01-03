@@ -22,6 +22,6 @@ int main(int argc, char *argv[]) {
     cmm::log << "Read from stream:\n";
     cmm::log << source << '\n';
 
-    //out << cmm::parce(source);
-    //return 0;
+    out << cmm::parce(source);
+    return 0;
 }
