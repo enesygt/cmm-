@@ -3,3 +3,4 @@ bin/*
 build/*
 generate_bin.bat
 Makefile
+docs/temp.md

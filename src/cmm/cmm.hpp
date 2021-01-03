@@ -7,6 +7,7 @@
 
 namespace cmm {
 
+/// Parces the markdown source returning the html version
 std::string parce(const std::string &source);
 
 }

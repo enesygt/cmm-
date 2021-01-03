@@ -5,6 +5,7 @@
 
 namespace cmm {
 
+/// Class used for debug purposes
 class Logger {
    public:
     template<typename T>
@@ -18,6 +19,7 @@ class Logger {
     }
 };
 
+/// The logger used for debbugin
 extern Logger log; // NOLINT
 
 } // namespace cmm

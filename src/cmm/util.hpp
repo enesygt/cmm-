@@ -8,6 +8,7 @@
 
 namespace cmm {
 
+/// Reads the stream until if finds the EOF character
 std::string full_stream_read(std::istream &in);
 
 }

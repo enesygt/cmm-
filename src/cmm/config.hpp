@@ -4,8 +4,7 @@
 #include <iostream>
 #include <ostream>
 
-namespace cmm {
-namespace config {
+namespace cmm::config {
 
 namespace imp {
 
@@ -18,8 +17,8 @@ extern std::ofstream possible_output_stream; // NOLINT
 
 constexpr const char *help_message = "Ayuda";
 
-// NOLINTNEXTLINE
-void parce_cmd_args(int argc, char *argv[]);
+/// Configures the parcer
+void parce_cmd_args(int argc, char *argv[]); // NOLINT
 
 std::istream &get_input_stream(void);
 std::ostream &get_out_stream(void);
@@ -29,7 +28,6 @@ constexpr bool debug_enabled = true;
 extern bool debug;             // NOLINT
 extern bool just_help_message; // NOLINT
 
-} // namespace config
-} // namespace cmm
+} // namespace cmm::config
 
 #endif
