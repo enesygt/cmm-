@@ -1,5 +1,5 @@
 Checks:
 '-*,bugprone-*,cppcoreguidelines-*,google-*,misc-*,modernize-*,performance-*,readability-*,-modernize-use-trailing-return-type,
 -modernize-redundant-void-arg, -readability-implicit-bool-conversion,
--bugprone-exception-escape'
+-bugprone-exception-escape, -google-runtime-references'
 FormatStyle: 'file'
