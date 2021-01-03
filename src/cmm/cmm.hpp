@@ -4,6 +4,7 @@
 #include <cmm/config.hpp>
 #include <cmm/logger.hpp>
 #include <cmm/util.hpp>
+#include <cmm/components.hpp>
 
 namespace cmm {
 
