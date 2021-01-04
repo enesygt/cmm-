@@ -27,11 +27,11 @@ TEST_CASE("Emphasis", "[emphasis] [inline]") {
         "Hola amigo <strong>como</strong> <strong>estas</strong>?",
         "Hola <em>amigo</em> como <strong>estas?</strong>",
         "Hola <strong>amigo</strong> como <em>estas?</em>",
-        ""
+        "<em><strong>Hola</strong></em>"
     };
 
     for (size_t i = 0; i < entries.size(); i++) {
-        cmm::process_emphasis(entries[i]);
-        CHECK(entries[i] == results[i]);
+        auto res = cmm::parce(entries[i]);
+        CHECK(res == results[i]);
     }
 }

@@ -4,6 +4,8 @@
 int main(int argc, char *argv[]) {
     try {
 
+        cmm::config::debug = true;
+
         try {
             cmm::config::parce_cmd_args(argc, argv);
         } catch (const std::exception &e) {

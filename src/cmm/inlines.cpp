@@ -21,7 +21,7 @@ void process_emphasis(std::string &source) {
 }
 
 void process_strong_emphasis(std::string &source) {
-    std::regex emphasis(R"([_*][_*]([^_*]+)[_*][_*])");
+    std::regex emphasis(R"([_*]{2}([^_*]+)[_*]{2})");
     std::string replacement("<strong>$1</strong>");
 
     std::string result = std::regex_replace(source, emphasis, replacement);
