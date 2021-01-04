@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 17)
 
 include_directories("src")
 
-file(GLOB cmm_SRC "src/cmm/*.cpp")
+file(GLOB cmm_SRC "src/cmm/*.cpp" "src/cmm/components/*.cpp")
 add_library(cmm STATIC ${cmm_SRC})
 
 file(GLOB tests_SRC "tests/*.cpp")

@@ -5,6 +5,7 @@
 #include <cmm/logger.hpp>
 #include <cmm/util.hpp>
 #include <cmm/components.hpp>
+#include <cmm/inlines.hpp>
 
 namespace cmm {
 
