@@ -28,6 +28,11 @@ constexpr bool debug_enabled = true;
 extern bool debug;             // NOLINT
 extern bool just_help_message; // NOLINT
 
+class missing_cmdline_args : public std::exception {
+   public:
+    [[nodiscard]] const char *what() const override;
+};
+
 } // namespace cmm::config
 
 #endif

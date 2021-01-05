@@ -3,8 +3,7 @@
 #include <fstream>
 #include <cstring>
 
-namespace cmm {
-namespace config {
+namespace cmm::config {
 
 namespace imp {
 
@@ -25,7 +24,7 @@ void parce_cmd_args(int argc, char *argv[]) {
         if (position < argc) {
             return argv[position]; // NOLINT
         }
-        throw std::exception("Missing comand line arguments");
+        throw missing_cmdline_args{};
     };
 
     for (int i = 0; i < argc; i++) {
@@ -70,5 +69,8 @@ std::ostream &get_out_stream(void) {
     return *imp::out_stream;
 }
 
-} // namespace config
-} // namespace cmm
+const char* missing_cmdline_args::what() const {
+    return "Missing comand line arguments";
+}
+
+}  // namespace cmm::config
