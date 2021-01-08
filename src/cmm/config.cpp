@@ -14,8 +14,9 @@ std::ofstream possible_output_stream;  // NOLINT
 
 } // namespace imp
 
-bool debug = false;             // NOLINT
-bool just_help_message = false; // NOLINT
+bool debug = false;              // NOLINT
+bool just_help_message = false;  // NOLINT
+bool inlines_with_regex = false; // NOLINT
 
 // NOLINTNEXTLINE
 void parce_cmd_args(int argc, char *argv[]) {
@@ -29,12 +30,15 @@ void parce_cmd_args(int argc, char *argv[]) {
 
     for (int i = 0; i < argc; i++) {
         // Debug messages
-        if (std::strcmp("-d", argv_at(i)) == 0) {
+        if (std::strcmp("-d", argv_at(i)) == 0
+            || std::strcmp("--debug-messages", argv_at(i)) == 0) {
+
             debug = true;
         }
 
         // Input file
-        else if (std::strcmp("-f", argv_at(i)) == 0) {
+        else if (std::strcmp("-f", argv_at(i)) == 0
+                 || std::strcmp("--input-file", argv_at(i)) == 0) {
             const char *in = argv_at(i + 1);
             // Do nothing if stream is stdin
             if (std::strcmp("-", in) != 0) {
@@ -44,7 +48,8 @@ void parce_cmd_args(int argc, char *argv[]) {
         }
 
         // Output file
-        else if (std::strcmp("-o", argv_at(i)) == 0) {
+        else if (std::strcmp("-o", argv_at(i)) == 0
+                 || std::strcmp("--output-file", argv_at(i)) == 0) {
             const char *out = argv_at(i + 1);
             // Do nothing if stream is stdout
             if (std::strcmp("-", out) != 0) {
@@ -53,8 +58,14 @@ void parce_cmd_args(int argc, char *argv[]) {
             }
         }
 
+        // Use regex
+        else if (std::strcmp("--use-regex", argv_at(i)) == 0) {
+            inlines_with_regex = true;
+        }
+
         // Help message
-        else if (std::strcmp("-h", argv_at(i)) == 0) {
+        else if (std::strcmp("-h", argv_at(i)) == 0
+                 || std::strcmp("--help", argv_at(i)) == 0) {
             just_help_message = true;
             return;
         }
@@ -69,8 +80,8 @@ std::ostream &get_out_stream(void) {
     return *imp::out_stream;
 }
 
-const char* missing_cmdline_args::what() const {
+const char *missing_cmdline_args::what() const {
     return "Missing comand line arguments";
 }
 
-}  // namespace cmm::config
+} // namespace cmm::config
