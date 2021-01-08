@@ -4,8 +4,7 @@ namespace cmm {
 
 std::string parce(const std::string &source) {
     std::string copy = source;
-    process_strong_emphasis(copy);
-    process_emphasis(copy);
+    process_inlines(copy);
     return copy;
 }
 
