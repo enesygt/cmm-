@@ -12,7 +12,7 @@ class Logger {
     Logger &operator<<(const T &t) {
         if constexpr (config::debug_enabled) {
             if (config::debug) {
-                std::cerr << t;
+                std::clog << t;
             }
         }
         return *this;
