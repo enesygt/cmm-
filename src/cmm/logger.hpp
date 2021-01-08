@@ -3,6 +3,8 @@
 
 #include <cmm/config.hpp>
 
+#define LogPosition() cmm::log << __FILE__ << ":" << __FUNCTION__ << ":(" << __LINE__ << ")" 
+
 namespace cmm {
 
 /// Class used for debug purposes
