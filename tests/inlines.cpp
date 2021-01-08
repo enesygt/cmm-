@@ -25,20 +25,20 @@ TEST_CASE("Emphasis", "[emphasis] [inline]") {
         "Hola _amigo_ como __estas?__",
         "Hola __amigo__ como _estas?_",
         "___Hola___",
-        R"(\*Hola*)",
-        R"(\**Hola\**)",
-        R"(Hola amigo \*como\* \*estas*?)",
-        R"(Hola amigo \**como\** \**estas**?)",
-        R"(Hola \*amigo\* como \**estas?\**)",
-        R"(Hola **amigo** como *estas?*)",
-        R"(***Hola***)",
-        R"(_Hola_)",
-        R"(__Hola__)",
-        R"(Hola amigo _como_ _estas_?)",
-        R"(Hola amigo __como__ __estas__?)",
-        R"(Hola _amigo_ como __estas?__)",
-        R"(Hola __amigo__ como _estas?_)",
-        R"(___Hola___)",
+        R"(\*Hola\*)",
+        R"(\*\*Hola\*\*)",
+        R"(Hola amigo \*como\* \*estas\*?)",
+        R"(Hola amigo \*\*como\*\* \*\*estas\*\*?)",
+        R"(Hola \*amigo\* como \*\*estas?\*\*)",
+        R"(Hola \*\*amigo\*\* como \*estas?\*)",
+        R"(\*\*\*Hola\*\*\*)",
+        R"(\_Hola\_)",
+        R"(\_\_Hola\_\_)",
+        R"(Hola amigo \_como\_ \_estas\_?)",
+        R"(Hola amigo \_\_como\_\_ \_\_estas\_\_?)",
+        R"(Hola \_amigo\_ como \_\_estas?\_\_)",
+        R"(Hola \_\_amigo\_\_ como \_estas?\_)",
+        R"(\_\_\_Hola\_\_\_)"
     };
 
     std::array<std::string, number_of_entries> results = {
@@ -59,7 +59,21 @@ TEST_CASE("Emphasis", "[emphasis] [inline]") {
         "Hola amigo <strong>como</strong> <strong>estas</strong>?",
         "Hola <em>amigo</em> como <strong>estas?</strong>",
         "Hola <strong>amigo</strong> como <em>estas?</em>",
-        "<em><strong>Hola</strong></em>"
+        "<em><strong>Hola</strong></em>",
+        R"(*Hola*)",
+        R"(**Hola**)",
+        R"(Hola amigo *como* *estas*?)",
+        R"(Hola amigo **como** **estas**?)",
+        R"(Hola *amigo* como **estas?**)",
+        R"(Hola **amigo** como *estas?*)",
+        R"(***Hola***)",
+        R"(_Hola_)",
+        R"(__Hola__)",
+        R"(Hola amigo _como_ _estas_?)",
+        R"(Hola amigo __como__ __estas__?)",
+        R"(Hola _amigo_ como __estas?__)",
+        R"(Hola __amigo__ como _estas?_)",
+        R"(___Hola___)"
     };
 
     for (size_t i = 0; i < entries.size(); i++) {
