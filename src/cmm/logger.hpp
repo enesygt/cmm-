@@ -1,9 +1,8 @@
 #ifndef CMM_LOGGER_HPP
 #define CMM_LOGGER_HPP
 
+#include <type_traits>
 #include <cmm/config.hpp>
-
-#define LogPosition() cmm::log << __FILE__ << ":" << __FUNCTION__ << ":(" << __LINE__ << ")" 
 
 namespace cmm {
 
