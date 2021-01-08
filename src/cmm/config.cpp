@@ -39,6 +39,7 @@ void parce_cmd_args(int argc, char *argv[]) {
         // Input file
         else if (std::strcmp("-f", argv_at(i)) == 0
                  || std::strcmp("--input-file", argv_at(i)) == 0) {
+
             const char *in = argv_at(i + 1);
             // Do nothing if stream is stdin
             if (std::strcmp("-", in) != 0) {
@@ -50,6 +51,7 @@ void parce_cmd_args(int argc, char *argv[]) {
         // Output file
         else if (std::strcmp("-o", argv_at(i)) == 0
                  || std::strcmp("--output-file", argv_at(i)) == 0) {
+
             const char *out = argv_at(i + 1);
             // Do nothing if stream is stdout
             if (std::strcmp("-", out) != 0) {
@@ -59,7 +61,7 @@ void parce_cmd_args(int argc, char *argv[]) {
         }
 
         // Use regex
-        else if (std::strcmp("--use-regex", argv_at(i)) == 0) {
+        else if (std::strcmp("--use-simple-regex", argv_at(i)) == 0) {
             inlines_with_regex = true;
         }
 
