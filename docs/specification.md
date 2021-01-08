@@ -139,7 +139,7 @@ de markdown.
 
 ### Code spans
 
-Son los el backskick string es una serie de `\``.
+Son los el backskick string es una serie de `` ` ``.
 
 Un code span empieza con un backskick string y termina con un backskick string.
 Los `\n` son convertidos a espacios. Se le puede hacer trim a un espacio si
