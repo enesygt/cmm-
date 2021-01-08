@@ -4,12 +4,16 @@
 namespace cmm {
 
 void process_strong_emphasis(std::string &source) {
+    if constexpr (config::inlines_with_regex) {
+
     std::regex emphasis(R"(([^\\_*]*)[_*]{2}([^_*]*[^_*\\])[_*]{2})");
     std::string replacement("$1<strong>$2</strong>$3");
 
     std::string result = std::regex_replace(source, emphasis, replacement);
 
     source = std::move(result);
+
+    }
 }
 
 void process_emphasis(std::string &source) {
