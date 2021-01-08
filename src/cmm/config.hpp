@@ -24,6 +24,7 @@ std::istream &get_input_stream(void);
 std::ostream &get_out_stream(void);
 
 constexpr bool debug_enabled = true;
+constexpr bool inlines_with_regex = false;
 
 extern bool debug;             // NOLINT
 extern bool just_help_message; // NOLINT
