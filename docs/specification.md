@@ -131,7 +131,38 @@ Inlines
 Los caracteres de puntuacion pueden ser escapados
 
 ~~~ markdown
-\!\"\#\$\%\&\'\(\)\*\+\,\-\.\/\:\;\<\=\>\?\@\[\\\]\^\_\`\{\|\}\~
+\!
+\"
+\#
+\$
+\%
+\&
+\'
+\(
+\)
+\*
+\+
+\,
+\-
+\.
+\/
+\:
+\;
+\<
+\=
+\>
+\?
+\@
+\[
+\\
+\]
+\^
+\_
+\`
+\{
+\|
+\}
+\~
 ~~~
 
 Con los demas caracteres se trata como un \ normal. Y puede escapar componentes
