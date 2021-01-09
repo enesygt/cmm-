@@ -3,9 +3,29 @@
 
 #include "catch2/catch.hpp"
 
-constexpr size_t number_of_entries = 32;
+
+TEST_CASE("Code Spans", "[code_span] [inline]") {
+    constexpr size_t number_of_entries = 3;
+    std::array<std::string, number_of_entries> entries {
+        "`Hola`",
+        "``Hola amigo``",
+        "````Hola ` como `` estas?````\\"
+    };
+
+    std::array<std::string, number_of_entries> results {
+        "<code>Hola</code>",
+        "<code>Hola amigo</code>",
+        "<code>Hola ` como `` estas?</code>\\"
+    };
+
+    for (size_t i = 0; i < number_of_entries; i++) {
+        std::string res = cmm::process_inlines(entries[i]);
+        CHECK(res == results[i]);
+    }
+}
 
 TEST_CASE("Emphasis", "[emphasis] [inline]") {
+    constexpr size_t number_of_entries = 32;
     std::array<std::string, number_of_entries> entries = {
         "*Hola*",
         "**Hola**",
@@ -77,7 +97,7 @@ TEST_CASE("Emphasis", "[emphasis] [inline]") {
     };
 
     for (size_t i = 0; i < entries.size(); i++) {
-        auto res = cmm::parce(entries[i]);
-        CHECK(res == results[i]);
+        auto res = cmm::process_inlines(entries[i]);//NOLINT
+        CHECK(res == results[i]);//NOLINT
     }
 }
