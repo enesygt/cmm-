@@ -5,15 +5,15 @@ constexpr bool testing_inlines = true;
 
 int main(int argc, char *argv[]) {
     try {
-        try {
-            cmm::config::parce_cmd_args(argc, argv);
-        } catch (const cmm::config::missing_cmdline_args &e) {
-            std::cerr << e.what() << '\n';
-            return 1;
-        }
+        cmm::config::parce_cmd_args(argc, argv);
+    } catch (const cmm::config::missing_cmdline_args &e) {
+        std::cerr << e.what() << '\n';
+        return 1;
+    }
 
-        cmm::log << "---- Debug messages enabled ----\n";
+    cmm::log << "---- Debug messages enabled ----\n";
 
+    try {
         if constexpr (testing_inlines) {
 
             std::string s;

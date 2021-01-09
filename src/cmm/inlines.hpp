@@ -6,7 +6,7 @@
 
 namespace cmm {
 
-void process_inlines(std::string &source);
+std::string process_inlines(const std::string &source);
 
 } // namespace cmm
 
