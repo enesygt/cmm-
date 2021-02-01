@@ -12,8 +12,8 @@ CommonMark spec. I ommited parts I think are not necessary
 Checklist
 =========
 
-* [ ] backslash escapes
-* [ ] code_spans
+* [X] backslash escapes
+* [X] code_spans
 * [ ] emphasis
 * [ ] strong_emphasis
 * [ ] links
