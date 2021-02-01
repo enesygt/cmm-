@@ -7,6 +7,9 @@ namespace cmm {
 
 using sz_t = std::string::size_type;
 
+constexpr char escape_char = '\\';
+constexpr char backstick = '`';
+
 struct InlineState final {
     const std::string &source; // NOLINT
     std::stringstream &result; // NOLINT
@@ -48,7 +51,7 @@ struct InlineState final {
     };
 
     // Writes str to the result
-    void write(const char * const str) {
+    void write(const char *const str) {
         result << str;
     }
 
@@ -58,7 +61,7 @@ struct InlineState final {
 
     // Counts the times a character is found, from the current position in the
     // source
-    [[nodiscard]] sz_t count_ocurrences(char c) const noexcept{
+    [[nodiscard]] sz_t count_ocurrences(char c) const noexcept {
         sz_t count = 0;
         while (source[index + count] == c) {
             ++count;
@@ -67,11 +70,6 @@ struct InlineState final {
     }
 };
 
-constexpr char escape_char = '\\';
-constexpr char backstick = '`';
-
-static bool is_escapable_character(char c) noexcept;
-static const char* escape_character(char c) noexcept;
 
 std::string process_inlines(const std::string &source) {
     std::stringstream result;
@@ -88,7 +86,7 @@ std::string process_inlines(const std::string &source) {
     while (state.is_valid()) {
         switch (state.current()) {
 
-        // Backslash escapes
+        // ----------------------Backslash escapes ----------------------
         case escape_char: {
             if (!state.next_is_in_range()) {
                 state.write_n(1);
@@ -107,7 +105,7 @@ std::string process_inlines(const std::string &source) {
             break;
         }
 
-        // Code spans
+        // ---------------------- Code Spans ----------------------
         case backstick: {
             if (state.in_code_span) {
                 sz_t backsticks_count = state.count_ocurrences(backstick);
@@ -135,20 +133,32 @@ std::string process_inlines(const std::string &source) {
             break;
         }
 
-            // Emphasis and strong emphasis
+        // ---------------------- Emphasis and Strong ----------------------
         case '*':
         case '_': {
+            if (state.in_emphasis) {
 
+                break;
+            }
+            if (state.in_strong_emphasis) {
+
+                break;
+            }
+            sz_t ocurrences = state.count_ocurrences(state.current());
+            if (ocurrences == 1) {
+                break;
+            }
+            if (ocurrences == 2)
             break;
         }
 
-            // Links
+        // ---------------------- Links ----------------------
         case '[': {
 
             break;
         }
 
-            // Images
+        // ---------------------- Images ----------------------
         case '!': {
 
             break;
@@ -162,118 +172,6 @@ std::string process_inlines(const std::string &source) {
     }
 
     return state.result.str();
-}
-
-static bool is_escapable_character(char c) noexcept {
-    switch (c) {
-    case '\\':
-    case '\'':
-    case '!':
-    case '"':
-    case '#':
-    case '$':
-    case '%':
-    case '&':
-    case '(':
-    case ')':
-    case '*':
-    case '+':
-    case ',':
-    case '-':
-    case '.':
-    case '/':
-    case ':':
-    case ';':
-    case '<':
-    case '=':
-    case '>':
-    case '?':
-    case '@':
-    case '[':
-    case ']':
-    case '^':
-    case '_':
-    case '`':
-    case '{':
-    case '|':
-    case '}':
-    case '~':
-        return true;
-    default:
-        return false;
-    }
-}
-
-static const char* escape_character(char c) noexcept {
-    switch (c) {
-    case '\\':
-        return "&bsol;";
-    case '\'':
-        return "&apos;";
-    case '!':
-        return "&excl;";
-    case '"':
-        return "&quot;";
-    case '#':
-        return "&num;";
-    case '$':
-        return "&dollar;";
-    case '%':
-        return "&percnt;";
-    case '&':
-        return "&amp;";
-    case '(':
-        return "&lpar;";
-    case ')':
-        return "&rpar;";
-    case '*':
-        return "&ast;";
-    case '+':
-        return "&plus;";
-    case ',':
-        return "&comma;";
-    case '-':
-        return "-"; // TODO(Pablo)
-    case '.':
-        return "&period;";
-    case '/':
-        return "&sol;";
-    case ':':
-        return "&colon;";
-    case ';':
-        return "&semi;";
-    case '<':
-        return "&lt;";
-    case '=':
-        return "&equals;";
-    case '>':
-        return "&gt;";
-    case '?':
-        return "&quest;";
-    case '@':
-        return "&commat;";
-    case '[':
-        return "&lsqb;";
-    case ']':
-        return "&rsqb;";
-    case '^':
-        return "&Hat;";
-    case '_':
-        return "&lowbar;";
-    case '`':
-        return "&grave;";
-    case '{':
-        return "&lcub;";
-    case '|':
-        return "&verbar;";
-    case '}':
-        return "&rcub;";
-    case '~':
-        return "~"; // TODO(Pablo)
-    default:
-        return "NOT AN ESCAPE CHARATER YOU !#$%&";
-    }
-
 }
 
 } // namespace cmm
