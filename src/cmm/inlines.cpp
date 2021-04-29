@@ -14,6 +14,13 @@ static void close_span(imp::inline_state* s, sz_t backsticks_count);
 static inline bool span_can_be_closed(imp::inline_state *s,
                                       sz_t               backsticks_count);
 
+
+static inline bool is_strong_emphasis(const imp::inline_state& s);
+static inline void open_emphasis(imp::inline_state* s);
+static inline void close_emphasis(imp::inline_state* s);
+static inline void open_strong_emphasis(imp::inline_state* s);
+static inline void close_strong_emphasis(imp::inline_state* s);
+
 std::string process_inlines(const std::string &source) {
     std::stringstream result;
     sz_t              index = 0;
@@ -68,21 +75,26 @@ std::string process_inlines(const std::string &source) {
         }
 
         // ---------------------- Emphasis and Strong ----------------------
-        case '*':
-        case '_': {
-            if (state.in_emphasis) {
+        case '*': {
+            const bool indicates_strong_emphasis = is_strong_emphasis(state);
 
+            if (state.in_emphasis && !indicates_strong_emphasis) {
+                close_emphasis(&state);
                 break;
             }
-            if (state.in_strong_emphasis) {
 
+            if (state.in_strong_emphasis && indicates_strong_emphasis) {
+                close_strong_emphasis(&state);
                 break;
             }
-            sz_t ocurrences = state.count_ocurrences(state.current());
-            if (ocurrences == 1) {
+
+            if (indicates_strong_emphasis) {
+                open_strong_emphasis(&state);
                 break;
             }
-            if (ocurrences == 2)
+
+            // Normal emphasis
+            open_emphasis(&state);
             break;
         }
 
@@ -124,6 +136,37 @@ static void close_span(imp::inline_state* s, sz_t backsticks_count) {
     s->ignore_n(backsticks_count);
     s->write("</code>");
     s->in_code_span = false;
+}
+
+static inline bool is_strong_emphasis(const imp::inline_state& s) {
+    if (!s.next_is_in_range()) {
+        return false;
+    }
+    return s.current() == s.next();
+}
+
+static inline void open_emphasis(imp::inline_state* s) {
+    s->ignore_n(1);
+    s->write("<em>");
+    s->in_emphasis = true;
+}
+
+static inline void close_emphasis(imp::inline_state* s) {
+    s->ignore_n(1);
+    s->write("</em>");
+    s->in_emphasis = false;
+}
+
+static inline void open_strong_emphasis(imp::inline_state *s) {
+    s->ignore_n(2);
+    s->write("<strong>");
+    s->in_strong_emphasis = true;
+}
+
+static inline void close_strong_emphasis(imp::inline_state* s) {
+    s->ignore_n(2);
+    s->write("</strong>");
+    s->in_strong_emphasis = false;
 }
 
 } // namespace cmm

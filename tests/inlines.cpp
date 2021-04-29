@@ -24,6 +24,7 @@ TEST_CASE("Code Spans", "[code_span] [inline]") {
     }
 }
 
+/* 
 TEST_CASE("Emphasis", "[emphasis] [inline]") {
     constexpr size_t number_of_entries = 32;
     std::array<std::string, number_of_entries> entries = {
@@ -101,3 +102,4 @@ TEST_CASE("Emphasis", "[emphasis] [inline]") {
         CHECK(res == results[i]);//NOLINT
     }
 }
+*/

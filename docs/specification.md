@@ -183,13 +183,13 @@ Esos ya los conoces.
 #### Italicas (em)
 
 ~~~ markdown
-*Italicas* _Italicas_
+*Italicas*
 ~~~
 
 #### Negritas (strong)
 
 ~~~ markdown
-**Negritas** __Negritas__
+**Negritas**
 ~~~~
 
 ### Links
