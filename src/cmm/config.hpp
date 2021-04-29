@@ -12,8 +12,8 @@ namespace imp {
 
 class config {
    public:
-    [[nodiscard]] bool debug() const;
-    config &           debug(bool d);
+    [[nodiscard]] bool debug() const noexcept;
+    config &           debug(bool d) noexcept;
 
    private:
     bool m_debug = false;

@@ -4,11 +4,11 @@ namespace cmm::config {
 
 namespace imp {
 
-[[nodiscard]] bool config::debug() const {
+[[nodiscard]] bool config::debug() const noexcept {
     return m_debug;
 }
 
-config &config::debug(bool d) {
+config &config::debug(bool d) noexcept {
     m_debug = d;
     return *this;
 }
