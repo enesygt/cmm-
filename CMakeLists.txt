@@ -12,7 +12,9 @@ file(GLOB tests_SRC "tests/*.cpp")
 add_executable(run_tests ${tests_SRC})
 target_link_libraries(run_tests cmm)
 
-add_executable(cmm-parce "src/main.cpp")
+
+file(GLOB cmm_parce_SRC "src/*.cpp")
+add_executable(cmm-parce ${cmm_parce_SRC})
 target_link_libraries(cmm-parce cmm)
 
 # https://stackoverflow.com/questions/2368811/how-to-set-warning-level-in-cmake

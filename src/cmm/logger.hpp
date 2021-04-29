@@ -12,7 +12,7 @@ class Logger {
     template<typename T>
     Logger &operator<<(const T &t) {
         if constexpr (config::debug_enabled) {
-            if (config::debug) {
+            if (config::conf.debug()) {
                 std::clog << t;
             }
         }

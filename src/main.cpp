@@ -1,10 +1,12 @@
 #include <iostream>
 #include <cmm/cmm.hpp>
 
+#include "cmd.hpp"
+
 int main(int argc, char *argv[]) {
     try {
-        cmm::config::parce_cmd_args(argc, argv);
-    } catch (const cmm::config::missing_cmdline_args &e) {
+        parce_cmd_args(argc, argv);
+    } catch (const missing_cmdline_args &e) {
         std::cerr << e.what() << '\n';
         return 1;
     }
@@ -13,11 +15,11 @@ int main(int argc, char *argv[]) {
 
     try {
 
-        std::ostream &out = cmm::config::get_out_stream();
-        std::istream &in = cmm::config::get_input_stream();
+        std::ostream &out = get_out_stream();
+        std::istream &in = get_input_stream();
 
-        if (cmm::config::just_help_message) {
-            out << cmm::config::help_message << '\n';
+        if (just_help_message) {
+            out << help_message << '\n';
             return 0;
         }
 
