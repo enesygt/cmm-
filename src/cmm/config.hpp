@@ -15,7 +15,18 @@ extern std::ofstream possible_output_stream; // NOLINT
 
 } // namespace imp
 
-constexpr const char *help_message = "Ayuda";
+constexpr const char *help_message = R"(
+cmm++
+=====
+
+Flags
+-----
+
+    --debug-messages     (-d) Habilitar mensajes de debug
+    --input-file [File]  (-f) Archivo de entrada
+    --output-file [File] (-o) Archivo de salida
+    --help               (-h) Muestra este mensaje
+)";
 
 /// Configures the parcer
 void parce_cmd_args(int argc, char *argv[]); // NOLINT
@@ -25,7 +36,6 @@ std::ostream &get_out_stream(void);
 
 constexpr bool debug_enabled = true;
 
-extern bool inlines_with_regex; // NOLINT
 extern bool debug;              // NOLINT
 extern bool just_help_message;  // NOLINT
 

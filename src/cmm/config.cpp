@@ -16,7 +16,6 @@ std::ofstream possible_output_stream;  // NOLINT
 
 bool debug = false;              // NOLINT
 bool just_help_message = false;  // NOLINT
-bool inlines_with_regex = false; // NOLINT
 
 // NOLINTNEXTLINE
 void parce_cmd_args(int argc, char *argv[]) {
@@ -58,11 +57,6 @@ void parce_cmd_args(int argc, char *argv[]) {
                 imp::possible_output_stream.open(argv_at(i + 1));
                 imp::out_stream = &imp::possible_output_stream;
             }
-        }
-
-        // Use regex
-        else if (std::strcmp("--use-simple-regex", argv_at(i)) == 0) {
-            inlines_with_regex = true;
         }
 
         // Help message
