@@ -74,11 +74,29 @@ std::string process_inlines(const std::string &source) {
             break;
         }
 
+        /*
+         *
+              CHECK( res == results[i] )
+            with expansion:
+              "<strong><em>Hola</strong></em>"
+              ==
+              "<strong><em>Hola</em></strong>"
+
+            C:\Users\pabsa\proyectos\cm++\tests\inlines.cpp(51): FAILED:
+              CHECK( res == results[i] )
+            with expansion:
+              "<strong>Hola, como <em>estas?</strong></em>"
+              ==
+              "<strong>Hola, como <em>estas?</em></strong>"
+         * */
+
         // ---------------------- Emphasis and Strong ----------------------
         case '*': {
             const bool indicates_strong_emphasis = is_strong_emphasis(state);
+            const sz_t count = state.count_ocurrences(state.current());
 
-            if (state.in_emphasis && !indicates_strong_emphasis) {
+            if (state.in_emphasis
+                && (!indicates_strong_emphasis || count == 3)) {
                 close_emphasis(&state);
                 break;
             }

@@ -14,8 +14,8 @@ Checklist
 
 * [X] backslash escapes
 * [X] code_spans
-* [ ] emphasis
-* [ ] strong_emphasis
+* [X] emphasis
+* [X] strong_emphasis
 * [ ] links
 * [ ] images
 * [ ] paragraph
