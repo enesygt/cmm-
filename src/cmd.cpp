@@ -1,3 +1,5 @@
+#include <cstring>
+
 #include <cmm/config.hpp>
 
 #include "cmd.hpp"
