@@ -29,7 +29,7 @@ extern std::ofstream possible_output_stream; // NOLINT
 
 class missing_cmdline_args : public std::exception {
    public:
-    [[nodiscard]] const char *what() const override;
+    [[nodiscard]] const char *what() const noexcept override;
 };
 
 extern bool just_help_message; // NOLINT
