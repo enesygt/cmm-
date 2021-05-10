@@ -2,7 +2,6 @@
 #define CMM_CONFIG_HPP
 
 #include <iostream>
-#include <ostream>
 
 namespace cmm::config {
 
