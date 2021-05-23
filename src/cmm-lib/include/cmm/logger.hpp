@@ -6,8 +6,7 @@
 
 namespace cmm {
 
-/// Class used for debug purposes
-class Logger {
+class Logger final {
    public:
     template<typename T>
     Logger &operator<<(const T &t) {
