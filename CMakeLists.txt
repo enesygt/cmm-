@@ -3,9 +3,9 @@ project(cmm++)
 
 set(CMAKE_CXX_STANDARD 17)
 
-include_directories("src")
+include_directories("src/cmm-lib/include/")
 
-file(GLOB cmm_SRC "src/cmm/*.cpp" "src/cmm/components/*.cpp")
+file(GLOB cmm_SRC "src/cmm-lib/cmm-lib/*.cpp" "src/cmm-lib/cmm-lib/components/*.cpp")
 add_library(cmm STATIC ${cmm_SRC})
 
 file(GLOB tests_SRC "tests/*.cpp")
@@ -13,7 +13,7 @@ add_executable(run_tests ${tests_SRC})
 target_link_libraries(run_tests cmm)
 
 
-file(GLOB cmm_parce_SRC "src/*.cpp")
+file(GLOB cmm_parce_SRC "src/cmm-parse/*.cpp")
 add_executable(cmm-parce ${cmm_parce_SRC})
 target_link_libraries(cmm-parce cmm)
 
