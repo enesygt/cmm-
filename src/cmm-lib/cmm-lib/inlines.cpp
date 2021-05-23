@@ -9,12 +9,13 @@ namespace cmm {
 constexpr char escape_char = '\\';
 constexpr char backstick = '`';
 
-static void open_span(imp::inline_state* s);
-static void close_span(imp::inline_state* s, sz_t backsticks_count);
+// Span
+static inline void open_span(imp::inline_state* s);
+static inline void close_span(imp::inline_state* s, sz_t backsticks_count);
 static inline bool span_can_be_closed(imp::inline_state *s,
                                       sz_t               backsticks_count);
 
-
+// Emphasis
 static inline bool is_strong_emphasis(const imp::inline_state& s);
 static inline void open_emphasis(imp::inline_state* s);
 static inline void close_emphasis(imp::inline_state* s);
@@ -126,7 +127,7 @@ static inline bool span_can_be_closed(imp::inline_state*s, sz_t backsticks_count
     return backsticks_count == s->number_of_backsticks;
 }
 
-static void open_span(imp::inline_state *s) {
+static inline void open_span(imp::inline_state *s) {
     sz_t backsticks_count = s->count_ocurrences('`');
     s->number_of_backsticks = backsticks_count;
     s->ignore_n(backsticks_count);
@@ -134,7 +135,7 @@ static void open_span(imp::inline_state *s) {
     s->in_code_span = true;
 }
 
-static void close_span(imp::inline_state* s, sz_t backsticks_count) {
+static inline void close_span(imp::inline_state* s, sz_t backsticks_count) {
     s->ignore_n(backsticks_count);
     s->write("</code>");
     s->in_code_span = false;
