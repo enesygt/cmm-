@@ -6,6 +6,9 @@
 
 namespace cmm {
 
+/**
+ * TODO: Doc
+ */
 std::string process_inlines(const std::string &source);
 
 } // namespace cmm
