@@ -11,21 +11,9 @@ constexpr char backstick = '`';
 
 namespace {
 
-// Escapes
 void escape_if_needed(imp::inline_state *s);
-
-// Span
-void code_spans(imp::inline_state *s);
-void open_span(imp::inline_state *s);
-void close_span(imp::inline_state *s, sz_t backsticks_count);
-bool span_can_be_closed(imp::inline_state *s, sz_t backsticks_count);
-
-// Emphasis
-bool is_strong_emphasis(const imp::inline_state &s);
-void open_emphasis(imp::inline_state *s);
-void close_emphasis(imp::inline_state *s);
-void open_strong_emphasis(imp::inline_state *s);
-void close_strong_emphasis(imp::inline_state *s);
+void process_code_spans(imp::inline_state *s);
+void process_emphasis_and_strong_emphasis(imp::inline_state *s);
 
 } // namespace
 
@@ -52,33 +40,13 @@ std::string process_inlines(const std::string &source) {
 
         // ---------------------- Code Spans ----------------------
         case backstick: {
-            code_spans(&state);
+            process_code_spans(&state);
             break;
         }
 
         // ---------------------- Emphasis and Strong ----------------------
         case '*': {
-            const bool indicates_strong_emphasis = is_strong_emphasis(state);
-            const sz_t count = state.count_ocurrences(state.current());
-
-            if (state.in_emphasis
-                && (!indicates_strong_emphasis || count == 3)) {
-                close_emphasis(&state);
-                break;
-            }
-
-            if (state.in_strong_emphasis && indicates_strong_emphasis) {
-                close_strong_emphasis(&state);
-                break;
-            }
-
-            if (indicates_strong_emphasis) {
-                open_strong_emphasis(&state);
-                break;
-            }
-
-            // Normal emphasis
-            open_emphasis(&state);
+            process_emphasis_and_strong_emphasis(&state);
             break;
         }
 
@@ -106,6 +74,18 @@ std::string process_inlines(const std::string &source) {
 
 namespace {
 
+// Span utils
+void open_span(imp::inline_state *s);
+void close_span(imp::inline_state *s, sz_t backsticks_count);
+bool span_can_be_closed(imp::inline_state *s, sz_t backsticks_count);
+
+// Emphasis utils
+bool is_strong_emphasis(const imp::inline_state &s);
+void open_emphasis(imp::inline_state *s);
+void close_emphasis(imp::inline_state *s);
+void open_strong_emphasis(imp::inline_state *s);
+void close_strong_emphasis(imp::inline_state *s);
+
 void escape_if_needed(imp::inline_state *s) {
     if (!s->next_is_in_range()) {
         s->write_n(1);
@@ -123,7 +103,7 @@ void escape_if_needed(imp::inline_state *s) {
     s->write_n(2);
 }
 
-void code_spans(imp::inline_state *s) {
+void process_code_spans(imp::inline_state *s) {
     if (s->in_code_span) {
         sz_t backsticks_count = s->count_ocurrences(backstick);
 
@@ -138,6 +118,29 @@ void code_spans(imp::inline_state *s) {
     }
 
     open_span(s);
+}
+
+void process_emphasis_and_strong_emphasis(imp::inline_state *s) {
+    const bool indicates_strong_emphasis = is_strong_emphasis(*s);
+    const sz_t count = s->count_ocurrences(s->current());
+
+    if (s->in_emphasis && (!indicates_strong_emphasis || count == 3)) {
+        close_emphasis(s);
+        return;
+    }
+
+    if (s->in_strong_emphasis && indicates_strong_emphasis) {
+        close_strong_emphasis(s);
+        return;
+    }
+
+    if (indicates_strong_emphasis) {
+        open_strong_emphasis(s);
+        return;
+    }
+
+    // Normal emphasis
+    open_emphasis(s);
 }
 
 bool span_can_be_closed(imp::inline_state *s, sz_t backsticks_count) {
