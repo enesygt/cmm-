@@ -1,25 +1,12 @@
-cmake_minimum_required(VERSION 3.0.0)
-project(cmm++)
+cmake_minimum_required(VERSION 3.18.1)
+
+project(
+    cmm++
+    LANGUAGES CXX
+    VERSION 0.0.0
+)
 
 set(CMAKE_CXX_STANDARD 17)
 
-include_directories("src/cmm-lib/include/")
-
-file(GLOB cmm_SRC "src/cmm-lib/cmm-lib/*.cpp" "src/cmm-lib/cmm-lib/components/*.cpp")
-add_library(cmm STATIC ${cmm_SRC})
-
-file(GLOB tests_SRC "tests/*.cpp")
-add_executable(run_tests ${tests_SRC})
-target_link_libraries(run_tests cmm)
-
-
-file(GLOB cmm_parce_SRC "src/cmm-parse/*.cpp")
-add_executable(cmm-parce ${cmm_parce_SRC})
-target_link_libraries(cmm-parce cmm)
-
-# https://stackoverflow.com/questions/2368811/how-to-set-warning-level-in-cmake
-if (MSVC)
-    add_compile_options(/W4)
-else()
-    add_compile_options(-Wall -Wextra -pedantic)
-endif()
+add_subdirectory("./src")
+add_subdirectory("./tests")
