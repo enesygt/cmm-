@@ -13,7 +13,7 @@
 
 namespace cmm {
 
-using sz_t = std::string::size_type;
+using size_t = std::string::size_type;
 
 namespace imp {
 
@@ -22,11 +22,11 @@ namespace { // NOLINT
 struct inline_state final {
     const std::string &source; // NOLINT
     std::stringstream &result; // NOLINT
-    sz_t &             index;  // NOLINT
+    size_t &             index;  // NOLINT
 
     // Code spans
     bool in_code_span = false;     // NOLINT
-    sz_t number_of_backsticks = 0; // NOLINT
+    size_t number_of_backsticks = 0; // NOLINT
 
     // Emphasis
     bool in_emphasis = false; // NOLINT
@@ -53,8 +53,8 @@ struct inline_state final {
     };
 
     // Writes n characters to the resutl
-    void write_n(sz_t n) {
-        for (sz_t i = 0; i < n; i++) {
+    void write_n(size_t n) {
+        for (size_t i = 0; i < n; i++) {
             result << source[index++];
         }
     };
@@ -64,14 +64,14 @@ struct inline_state final {
         result << str;
     }
 
-    void ignore_n(sz_t n) {
+    void ignore_n(size_t n) {
         index += n;
     };
 
     // Counts the times a character is found, from the current position in the
     // source
-    [[nodiscard]] sz_t count_ocurrences(char c) const noexcept {
-        sz_t count = 0;
+    [[nodiscard]] size_t count_ocurrences(char c) const noexcept {
+        size_t count = 0;
         while (source[index + count] == c) {
             ++count;
         }

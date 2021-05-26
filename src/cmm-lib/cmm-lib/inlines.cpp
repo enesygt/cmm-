@@ -14,12 +14,13 @@ namespace {
 void escape_if_needed(imp::inline_state *s);
 void process_code_spans(imp::inline_state *s);
 void process_emphasis_and_strong_emphasis(imp::inline_state *s);
+void process_links(imp::inline_state *s);
 
 } // namespace
 
 std::string process_inlines(const std::string &source) {
     std::stringstream result;
-    sz_t              index = 0;
+    size_t              index = 0;
 
     imp::inline_state state = {source, result, index};
 
@@ -52,7 +53,7 @@ std::string process_inlines(const std::string &source) {
 
         // ---------------------- Links ----------------------
         case '[': {
-
+            process_links(&state);
             break;
         }
 
@@ -76,8 +77,8 @@ namespace {
 
 // Span utils
 void open_span(imp::inline_state *s);
-void close_span(imp::inline_state *s, sz_t backsticks_count);
-bool span_can_be_closed(imp::inline_state *s, sz_t backsticks_count);
+void close_span(imp::inline_state *s, size_t backsticks_count);
+bool span_can_be_closed(imp::inline_state *s, size_t backsticks_count);
 
 // Emphasis utils
 bool is_strong_emphasis(const imp::inline_state &s);
@@ -85,6 +86,11 @@ void open_emphasis(imp::inline_state *s);
 void close_emphasis(imp::inline_state *s);
 void open_strong_emphasis(imp::inline_state *s);
 void close_strong_emphasis(imp::inline_state *s);
+
+// Links util
+struct link_positions {
+
+};
 
 void escape_if_needed(imp::inline_state *s) {
     if (!s->next_is_in_range()) {
@@ -105,7 +111,7 @@ void escape_if_needed(imp::inline_state *s) {
 
 void process_code_spans(imp::inline_state *s) {
     if (s->in_code_span) {
-        sz_t backsticks_count = s->count_ocurrences(backstick);
+        size_t backsticks_count = s->count_ocurrences(backstick);
 
         if (span_can_be_closed(s, backsticks_count)) {
             close_span(s, backsticks_count);
@@ -122,7 +128,7 @@ void process_code_spans(imp::inline_state *s) {
 
 void process_emphasis_and_strong_emphasis(imp::inline_state *s) {
     const bool indicates_strong_emphasis = is_strong_emphasis(*s);
-    const sz_t count = s->count_ocurrences(s->current());
+    const size_t count = s->count_ocurrences(s->current());
 
     if (s->in_emphasis && (!indicates_strong_emphasis || count == 3)) {
         close_emphasis(s);
@@ -143,19 +149,23 @@ void process_emphasis_and_strong_emphasis(imp::inline_state *s) {
     open_emphasis(s);
 }
 
-bool span_can_be_closed(imp::inline_state *s, sz_t backsticks_count) {
+void process_links(imp::inline_state *s) {
+
+}
+
+bool span_can_be_closed(imp::inline_state *s, size_t backsticks_count) {
     return backsticks_count == s->number_of_backsticks;
 }
 
 void open_span(imp::inline_state *s) {
-    sz_t backsticks_count = s->count_ocurrences('`');
+    size_t backsticks_count = s->count_ocurrences('`');
     s->number_of_backsticks = backsticks_count;
     s->ignore_n(backsticks_count);
     s->write("<code>");
     s->in_code_span = true;
 }
 
-void close_span(imp::inline_state *s, sz_t backsticks_count) {
+void close_span(imp::inline_state *s, size_t backsticks_count) {
     s->ignore_n(backsticks_count);
     s->write("</code>");
     s->in_code_span = false;
