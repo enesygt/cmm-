@@ -66,7 +66,7 @@ IndentGotoLabels: false
 IndentPPDirectives: BeforeHash
 IndentWrappedFunctionNames: true
 KeepEmptyLinesAtTheStartOfBlocks: true
-MaxEmptyLinesToKeep: 1
+MaxEmptyLinesToKeep: 2
 NamespaceIndentation: None
 PointerAlignment: Right
 ReflowComments: true
