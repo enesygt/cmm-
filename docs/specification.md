@@ -79,24 +79,6 @@ HTML Block
 Link al [spec](https://spec.commonmark.org/0.29/#html-block), sera lo ultimo
 que voy a implementar creo
 
-Link reference
---------------
-
-~~~ markdown
-[foo]: /url "title"
-
-[foo]
-~~~
-
-Genera:
-
-~~~ html
-<p><a href="/url" title="title">foo</a></p>
-~~~
-
-El titulo puede extenderce por multiples lineas, y los nombres son con caso
-insensitivo.
-
 Paragraphs
 ----------
 
@@ -114,7 +96,8 @@ de markdown. Posiblemente el penultimo en implementar. Link al
 
 ### List item
 
-Para que sean bulleted tienen que empezar con -, +, \*. Y para que sea ordenada requiere empezar con numeros del 0-9 seguidos de un . o un ).
+Para que sean bulleted tienen que empezar con -, +, \*. Y para que sea ordenada
+requiere empezar con numeros del 0-9 seguidos de un . o un ).
 
 Si la continuacion lleva minimo 2 espacios lo que este ahi puede ser otro
 compoenente.
