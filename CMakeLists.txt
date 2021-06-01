@@ -2,19 +2,21 @@ cmake_minimum_required(VERSION 3.18.1)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-
 project(
     cmm++
     LANGUAGES CXX
     VERSION 0.0.0
 )
 
+set(CMAKE_CXX_STANDARD 17)
+
 LIST(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
 include(CTest)
 include(Catch)
 
-set(CMAKE_CXX_STANDARD 17)
+option(CMM_DEBUG "Enable debug assertions" OFF)
+option(CMM_TEST "Enable testing" OFF)
 
 if (NOT CMM_DEBUG)
     add_compile_definitions(NDEBUG)
