@@ -192,6 +192,10 @@ void process_links(imp::inline_state *s) {
 #endif
 
     std::string link_name = get_link_name(ss, positions.value());
+
+    // Inside the [] there could be more markdown, so lets process that too.
+    link_name = process_inlines(link_name); 
+
     std::string link_url = get_link_url(ss, positions.value());
     std::string link_title = get_link_title(ss, positions.value());
 
