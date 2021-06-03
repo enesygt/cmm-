@@ -1,9 +1,11 @@
+#include <cassert>
 #include <iostream>
 #include <cmm/cmm.hpp>
 
 #include "cmd.hpp"
 
 int main(int argc, char *argv[]) {
+
     try {
         parce_cmd_args(argc, argv);
     } catch (const missing_cmdline_args &e) {
