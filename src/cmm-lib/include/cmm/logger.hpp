@@ -2,6 +2,7 @@
 #define CMM_LOGGER_HPP
 
 #include <type_traits>
+#include <iomanip>
 #include <cmm/config.hpp>
 
 namespace cmm {
