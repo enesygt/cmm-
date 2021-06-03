@@ -27,3 +27,10 @@ if (CMM_TEST)
 endif ()
 
 add_subdirectory("./src")
+
+# https://stackoverflow.com/questions/2368811/how-to-set-warning-level-in-cmake
+if (MSVC)
+    add_compile_options(/W4)
+else()
+    add_compile_options(-Wall -Wextra -pedantic)
+endif()
