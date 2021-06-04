@@ -20,6 +20,7 @@ void escape_if_needed(imp::inline_state *s);
 void process_code_spans(imp::inline_state *s);
 void process_emphasis_and_strong_emphasis(imp::inline_state *s);
 void process_links(imp::inline_state *s);
+void process_images(imp::inline_state *s);
 
 } // namespace
 
@@ -64,7 +65,7 @@ std::string process_inlines(const std::string &source) {
 
         // ---------------------- Images ----------------------
         case '!': {
-
+            process_images(&state);
             break;
         }
 
@@ -107,6 +108,7 @@ struct link_debug_data {
     link_positions positions;
 };
 
+
 std::ostream &operator<<(std::ostream &o, const link_debug_data &l);
 std::optional<link_positions> check_if_valid_link(imp::inline_state *s);
 
@@ -116,6 +118,9 @@ std::string get_link_url(std::stringstream &   source,
                          const link_positions &positions);
 std::string get_link_title(std::stringstream &   source,
                            const link_positions &positions);
+
+// Images has no utils, it uses the same ones as link
+
 
 void escape_if_needed(imp::inline_state *s) {
     if (!s->next_is_in_range()) {
@@ -183,27 +188,18 @@ void process_links(imp::inline_state *s) {
         return;
     }
 
-    std::string link_text = s->source.substr(s->index, positions->total_length);
-    std::stringstream ss(link_text);
+    const std::string link_text =
+        s->source.substr(s->index, positions->total_length);
 
-#if 0
-    link_debug_data debug_data = {link_text, positions.value()};
-    log << debug_data << '\n';
-#endif
+    std::stringstream ss(link_text);
 
     std::string link_name = get_link_name(ss, positions.value());
 
     // Inside the [] there could be more markdown, so lets process that too.
-    link_name = process_inlines(link_name); 
+    link_name = process_inlines(link_name);
 
-    std::string link_url = get_link_url(ss, positions.value());
-    std::string link_title = get_link_title(ss, positions.value());
-
-#if 0
-    log << "Extracted link name: " << link_name << '\n';
-    log << "Extracted link url: " << link_url << '\n';
-    log << "Extracted link title: " << link_title << '\n';
-#endif
+    const std::string link_url = get_link_url(ss, positions.value());
+    const std::string link_title = get_link_title(ss, positions.value());
 
     s->ignore_n(positions->total_length);
     s->write("<a href=\"");
@@ -213,6 +209,42 @@ void process_links(imp::inline_state *s) {
     s->write("\">");
     s->write(link_name.c_str());
     s->write("</a>");
+}
+
+void process_images(imp::inline_state* s) {
+    if (!s->next_is_in_range()) {
+        s->write_n(1);
+        return;
+    }
+
+    if (s->next() != '[') {
+        s->write_n(1);
+        return;
+    }
+
+    s->ignore_n(1);
+    const std::optional<link_positions> positions = check_if_valid_link(s);
+
+    if (!positions) {
+        s->write("!");
+        return;
+    }
+
+    std::string image_text = s->source.substr(s->index, positions->total_length);
+    std::stringstream ss(image_text);
+
+    const std::string image_name = get_link_name(ss, positions.value());
+    const std::string image_url = get_link_url(ss, positions.value());
+    const std::string image_title = get_link_title(ss, positions.value());
+
+    s->ignore_n(positions->total_length);
+    s->write("<img src=\"");
+    s->write(image_url.c_str());
+    s->write("\" alt=\"");
+    s->write(image_name.c_str());
+    s->write("\" title=\"");
+    s->write(image_title.c_str());
+    s->write("\"/>");
 }
 
 bool span_can_be_closed(imp::inline_state *s, index backsticks_count) {
@@ -318,6 +350,8 @@ std::optional<link_positions> check_if_valid_link(imp::inline_state *s) {
      *      * The url length will be from the '(' to the next ' ' - 1
      *      * The title lenght is the total lenght minus the name and url
      *        lengths, minus the '[', ']', '(', ' ', ')' (-5).
+     *
+     * Applies the same to the image (We are ommiting the ! at the start).
      */
 
     positions.total_length = title_section_closing + 1;

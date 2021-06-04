@@ -185,4 +185,6 @@ empieza y temina con un espacio.
 
 ~~~ markdown
 ![title](url)
+![title](url title)
+![title](url multi word title)
 ~~~
