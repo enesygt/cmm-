@@ -1,20 +1,20 @@
-CommonMark Components
-=====================
+Markdown Components
+===================
 
 Thematic Breaks:
 ----------------
 
 ~~~ markdown
-***
----
-___
+    ***
+    ---
+    ___
 ~~~~
 
 No se valen los siguientes:
 
 ~~~ markdown
-+++
-===
+    +++
+    ===
 ~~~
 
 Estos pueden partir parafos
@@ -31,12 +31,12 @@ ATX Headings
 Son los headers con los caracteres `#`
 
 ~~~ markdown
-# foo
-## foo
-### foo
-#### foo
-##### foo
-###### foo
+    # foo
+    ## foo
+    ### foo
+    #### foo
+    ##### foo
+    ###### foo
 ~~~
 
 Nesitan un espacio, y no pueden ser mas de 6
@@ -49,12 +49,12 @@ Setext Headings
 Son los headers subrayados, con 3 o mas caracteres subrayando
 
 ~~~ markdown
-Foo *bar*
-=========
-
-Foo *baz
-bar*
----------
+    Foo *bar*
+    =========
+    
+    Foo *baz
+    bar*
+    ---------
 ~~~
 
 Permite indentar hasta 3 espacios cada cosa, y no pueden estar vacios
@@ -68,8 +68,8 @@ interrumpir parrafos.
 Fenced Code Blocks
 ------------------
 
-La cerca esta formada por `\` ` o con `~`. La primera barrera puede contener un
-indicador del lenguaje.
+La cerca esta formada por `` ` `` o con `~`. La primera barrera puede contener
+un indicador del lenguaje.
 
 Si no se cierran duran hasta el final del documento
 
@@ -97,7 +97,7 @@ de markdown. Posiblemente el penultimo en implementar. Link al
 ### List item
 
 Para que sean bulleted tienen que empezar con -, +, \*. Y para que sea ordenada
-requiere empezar con numeros del 0-9 seguidos de un . o un ).
+requiere empezar con numeros del 0-9 seguidos de un '.'.
 
 Si la continuacion lleva minimo 2 espacios lo que este ahi puede ser otro
 compoenente.
@@ -161,8 +161,6 @@ empieza y temina con un espacio.
 
 ### Emphasis y Stong empasis
 
-Esos ya los conoces. 
-
 #### Italicas (em)
 
 ~~~ markdown
@@ -178,8 +176,9 @@ Esos ya los conoces.
 ### Links
 
 ~~~ markdown
-[link](url "title")
-[link](url)
+[text](url title)
+[text](url multi word title)
+[text](url)
 ~~~~
 
 ### Images
