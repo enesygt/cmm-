@@ -82,3 +82,30 @@ TEST_CASE("Links", "[link] [inline]") {
         CHECK(res == results[i]);                    // NOLINT
     }
 }
+
+// <img src="/url" alt="alternativo" title="titulo largo"/>
+TEST_CASE("Images", "[image] [inlines]") {
+    constexpr size_t                           number_of_entries = 7;
+    std::array<std::string, number_of_entries> entries = {
+        "![]()",
+        "![text_all_together]()",
+        "![text_all_together](/url)",
+        "![text with spaces](/url)",
+        // clang-format off
+        "![text with spaces](/and/a/non/realisticly/long/url//how/are/you//im/fine//this/is/getting/kind/of/boring/to/write//i/imagine/it/will/be/hard/to/read)",
+        // clang-format on
+        "![text with spaces](/url single_word_title)",
+        "![text with spaces](/url Multi word title)",
+    };
+
+    std::array<std::string, number_of_entries> results = {
+        R"(<img src="" alt="" title=""/>)",
+        R"(<img src="" alt="text_all_together" title=""/>)",
+        R"(<img src="/url" alt="text_all_together" title=""/>)",
+        R"(<img src="/url" alt="text with spaces" title=""/>)",
+        R"(<img src="/and/a/non/realisticly/long/url//how/are/you//im/fine//this/is/getting/kind/of/boring/to/write//i/imagine/it/will/be/hard/to/read" alt="text with spaces" title=""/>)",
+        R"(<img src="/url" alt="text with spaces" title="single_word_title"/>)",
+        R"(<img src="/url" alt="text with spaces" title="Multi word title"/>)",
+    };
+
+}
