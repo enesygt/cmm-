@@ -9,6 +9,10 @@ constexpr bool debug_enabled = true;
 
 namespace imp {
 
+/**
+ * Class that holds the configuration, for now it only works for debug purposes.
+ * I might delete it latter.
+ */
 class config {
    public:
     [[nodiscard]] bool debug() const noexcept;

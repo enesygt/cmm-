@@ -18,6 +18,13 @@ include(Catch)
 option(CMM_DEBUG "Enable debug assertions" OFF)
 option(CMM_UNIT_TEST "Enable unit testing" OFF)
 
+# https://stackoverflow.com/questions/2368811/how-to-set-warning-level-in-cmake
+if (MSVC)
+    add_compile_options(/W4)
+else()
+    add_compile_options(-Wall -Wextra -pedantic)
+endif()
+
 if (NOT CMM_DEBUG)
     add_compile_definitions(NDEBUG)
 endif()
@@ -27,10 +34,3 @@ if (CMM_UNIT_TEST)
 endif ()
 
 add_subdirectory("./src")
-
-# https://stackoverflow.com/questions/2368811/how-to-set-warning-level-in-cmake
-if (MSVC)
-    add_compile_options(/W4)
-else()
-    add_compile_options(-Wall -Wextra -pedantic)
-endif()

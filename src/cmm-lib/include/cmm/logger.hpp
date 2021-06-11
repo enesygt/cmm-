@@ -7,6 +7,9 @@
 
 namespace cmm {
 
+/**
+ * Just for debug, might get deleted later
+ */
 class Logger final {
    public:
     template<typename T>

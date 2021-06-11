@@ -4,12 +4,11 @@
  * This file is meant to only be used with "src/cmm-lib/cmm-lib/inlines.cpp",
  * nothing more
  *
- * */
+ */
 
 #ifndef CMM_PRIVATE_INLINE_STATE
 #define CMM_PRIVATE_INLINE_STATE
 
-#include <cmm/usings.hpp>
 #include <cassert>
 #include <string>
 #include <sstream>
@@ -22,11 +21,11 @@ namespace { // NOLINT
 struct inline_state final {
     const std::string &source; // NOLINT
     std::stringstream &result; // NOLINT
-    cmm::index &       index;  // NOLINT
+    int64_t &       index;  // NOLINT
 
     // Code spans
     bool       in_code_span = false;     // NOLINT
-    cmm::index number_of_backsticks = 0; // NOLINT
+    int64_t number_of_backsticks = 0; // NOLINT
 
     // Emphasis
     bool in_emphasis = false; // NOLINT
@@ -55,8 +54,8 @@ struct inline_state final {
     };
 
     // Writes n characters to the result
-    void write_n(cmm::index n) {
-        for (cmm::index i = 0; i < n; i++) {
+    void write_n(int64_t n) {
+        for (int64_t i = 0; i < n; i++) {
             assert(this->is_valid());
             result << source[index++];
         }
@@ -67,29 +66,29 @@ struct inline_state final {
         result << str;
     }
 
-    void ignore_n(cmm::index n) noexcept {
+    void ignore_n(int64_t n) noexcept {
         index += n;
     };
 
     // Counts the times a character is found, from the current position in the
     // source
-    [[nodiscard]] cmm::index count_ocurrences(char c) const noexcept {
-        cmm::index count = 0;
+    [[nodiscard]] int64_t count_ocurrences(char c) const noexcept {
+        int64_t count = 0;
         while (source[index + count] == c) {
             ++count;
         }
         return count;
     }
 
-    constexpr static cmm::index character_not_found = -1;
+    constexpr static int64_t character_not_found = -1;
 
     // Counts the amount of characters til c apears. Will start advance
     // characters from the current character.
-    [[nodiscard]] cmm::index
-        distance_to(char c, cmm::index advance = 0) const noexcept {
+    [[nodiscard]] int64_t
+        distance_to(char c, int64_t advance = 0) const noexcept {
 
-        const cmm::index starting_position = index + advance;
-        cmm::index       distance = 0;
+        const int64_t starting_position = index + advance;
+        int64_t       distance = 0;
 
         while (source[starting_position + distance]) {
             if (source[starting_position + distance] == c) {
@@ -102,7 +101,7 @@ struct inline_state final {
     }
 
     // Will return the character, `position`characters from the current position
-    [[nodiscard]] char at(cmm::index position) const noexcept {
+    [[nodiscard]] char at(int64_t position) const noexcept {
         return source[index + position];
     }
 };

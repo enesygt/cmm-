@@ -4,11 +4,11 @@
 #include <iostream>
 #include <string>
 
-#include <cmm/logger.hpp>
-
 namespace cmm {
 
-/// Reads the stream until if finds the EOF character
+/**
+ * @return A string containing the full contents of the stream
+ */
 std::string full_stream_read(std::istream &in);
 
 }
