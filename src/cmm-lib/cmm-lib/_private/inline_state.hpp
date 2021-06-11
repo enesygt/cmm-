@@ -12,6 +12,8 @@
 #include <cassert>
 #include <string>
 #include <sstream>
+#include <limits>
+
 #include <cstddef>
 
 namespace cmm::imp {
@@ -21,11 +23,11 @@ namespace { // NOLINT
 struct inline_state final {
     const std::string &source; // NOLINT
     std::stringstream &result; // NOLINT
-    int64_t &       index;  // NOLINT
+    size_t &       index;  // NOLINT
 
     // Code spans
     bool       in_code_span = false;     // NOLINT
-    int64_t number_of_backsticks = 0; // NOLINT
+    size_t number_of_backsticks = 0; // NOLINT
 
     // Emphasis
     bool in_emphasis = false; // NOLINT
@@ -54,8 +56,8 @@ struct inline_state final {
     };
 
     // Writes n characters to the result
-    void write_n(int64_t n) {
-        for (int64_t i = 0; i < n; i++) {
+    void write_n(size_t n) {
+        for (size_t i = 0; i < n; i++) {
             assert(this->is_valid());
             result << source[index++];
         }
@@ -66,29 +68,30 @@ struct inline_state final {
         result << str;
     }
 
-    void ignore_n(int64_t n) noexcept {
+    void ignore_n(size_t n) noexcept {
         index += n;
     };
 
     // Counts the times a character is found, from the current position in the
     // source
-    [[nodiscard]] int64_t count_ocurrences(char c) const noexcept {
-        int64_t count = 0;
+    [[nodiscard]] size_t count_ocurrences(char c) const noexcept {
+        size_t count = 0;
         while (source[index + count] == c) {
             ++count;
         }
         return count;
     }
 
-    constexpr static int64_t character_not_found = -1;
+    constexpr static size_t character_not_found =
+        std::numeric_limits<size_t>::max();
 
     // Counts the amount of characters til c apears. Will start advance
     // characters from the current character.
-    [[nodiscard]] int64_t
-        distance_to(char c, int64_t advance = 0) const noexcept {
+    [[nodiscard]] size_t
+        distance_to(char c, size_t advance = 0) const noexcept {
 
-        const int64_t starting_position = index + advance;
-        int64_t       distance = 0;
+        const size_t starting_position = index + advance;
+        size_t       distance = 0;
 
         while (source[starting_position + distance]) {
             if (source[starting_position + distance] == c) {
@@ -101,7 +104,7 @@ struct inline_state final {
     }
 
     // Will return the character, `position`characters from the current position
-    [[nodiscard]] char at(int64_t position) const noexcept {
+    [[nodiscard]] char at(size_t position) const noexcept {
         return source[index + position];
     }
 };

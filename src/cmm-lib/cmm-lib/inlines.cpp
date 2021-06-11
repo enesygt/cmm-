@@ -25,7 +25,7 @@ void process_images(imp::inline_state *s);
 
 std::string process_inlines(const std::string &source) {
     std::stringstream result;
-    int64_t             i = 0;
+    size_t             i = 0;
 
     imp::inline_state state = {source, result, i};
 
@@ -82,8 +82,8 @@ namespace {
 
 // Span utils
 void open_span(imp::inline_state *s);
-void close_span(imp::inline_state *s, int64_t backsticks_count);
-bool span_can_be_closed(imp::inline_state *s, int64_t backsticks_count);
+void close_span(imp::inline_state *s, size_t backsticks_count);
+bool span_can_be_closed(imp::inline_state *s, size_t backsticks_count);
 
 
 // Emphasis utils
@@ -96,10 +96,10 @@ void close_strong_emphasis(imp::inline_state *s);
 
 // Links and images utils
 struct link_positions {
-    int64_t total_length = 0;
-    int64_t name_length = 0;
-    int64_t url_legth = 0;
-    int64_t title_length = 0;
+    size_t total_length = 0;
+    size_t name_length = 0;
+    size_t url_legth = 0;
+    size_t title_length = 0;
 };
 
 struct link_debug_data {
@@ -108,7 +108,7 @@ struct link_debug_data {
 };
 
 
-std::ostream &operator<<(std::ostream &o, const link_debug_data &l);
+// std::ostream &operator<<(std::ostream &o, const link_debug_data &l);
 std::optional<link_positions> check_if_valid_link(imp::inline_state *s);
 
 std::string get_link_name(std::stringstream &   source,
@@ -138,7 +138,7 @@ void escape_if_needed(imp::inline_state *s) {
 
 void process_code_spans(imp::inline_state *s) {
     if (s->in_code_span) {
-        int64_t backsticks_count = s->count_ocurrences(backstick);
+        size_t backsticks_count = s->count_ocurrences(backstick);
 
         if (span_can_be_closed(s, backsticks_count)) {
             close_span(s, backsticks_count);
@@ -156,7 +156,7 @@ void process_code_spans(imp::inline_state *s) {
 void process_emphasis_and_strong_emphasis(imp::inline_state *s) {
 
     const bool   indicates_strong_emphasis = is_strong_emphasis(*s);
-    const int64_t count = s->count_ocurrences(s->current());
+    const size_t count = s->count_ocurrences(s->current());
 
     if (s->in_emphasis && (!indicates_strong_emphasis || count == 3)) {
         close_emphasis(s);
@@ -246,19 +246,19 @@ void process_images(imp::inline_state* s) {
     s->write("\"/>");
 }
 
-bool span_can_be_closed(imp::inline_state *s, int64_t backsticks_count) {
+bool span_can_be_closed(imp::inline_state *s, size_t backsticks_count) {
     return backsticks_count == s->number_of_backsticks;
 }
 
 void open_span(imp::inline_state *s) {
-    int64_t backsticks_count = s->count_ocurrences('`');
+    size_t backsticks_count = s->count_ocurrences('`');
     s->number_of_backsticks = backsticks_count;
     s->ignore_n(backsticks_count);
     s->write("<code>");
     s->in_code_span = true;
 }
 
-void close_span(imp::inline_state *s, int64_t backsticks_count) {
+void close_span(imp::inline_state *s, size_t backsticks_count) {
     s->ignore_n(backsticks_count);
     s->write("</code>");
     s->in_code_span = false;
@@ -296,7 +296,7 @@ void close_strong_emphasis(imp::inline_state *s) {
 }
 
 std::optional<link_positions> check_if_valid_link(imp::inline_state *s) {
-    constexpr int64_t character_not_found =
+    constexpr size_t character_not_found =
         imp::inline_state::character_not_found;
 
     link_positions positions;
@@ -310,7 +310,7 @@ std::optional<link_positions> check_if_valid_link(imp::inline_state *s) {
      *
      */
 
-    int64_t link_section_closing = s->distance_to(']');
+    size_t link_section_closing = s->distance_to(']');
     if (link_section_closing == character_not_found) {
         return std::nullopt;
     }
@@ -319,7 +319,7 @@ std::optional<link_positions> check_if_valid_link(imp::inline_state *s) {
         return std::nullopt;
     }
 
-    int64_t title_section_closing = s->distance_to(')');
+    size_t title_section_closing = s->distance_to(')');
     if (title_section_closing == character_not_found) {
         return std::nullopt;
     }
@@ -373,6 +373,10 @@ std::optional<link_positions> check_if_valid_link(imp::inline_state *s) {
     return positions;
 }
 
+#if 0
+
+// This code stays here for debuging purposes
+
 std::ostream &operator<<(std::ostream &o, const link_debug_data &l) {
 
     o << "\nFound link: '" << l.link_text << "'\n";
@@ -384,6 +388,8 @@ std::ostream &operator<<(std::ostream &o, const link_debug_data &l) {
 
     return o;
 }
+
+#endif
 
 std::string get_link_name(std::stringstream &   source,
                           const link_positions &positions) {
