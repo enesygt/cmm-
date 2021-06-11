@@ -95,7 +95,7 @@ void open_strong_emphasis(imp::inline_state *s);
 void close_strong_emphasis(imp::inline_state *s);
 
 
-// Links util
+// Links and images utils
 struct link_positions {
     index total_length = 0;
     index name_length = 0;
@@ -118,8 +118,6 @@ std::string get_link_url(std::stringstream &   source,
                          const link_positions &positions);
 std::string get_link_title(std::stringstream &   source,
                            const link_positions &positions);
-
-// Images has no utils, it uses the same ones as link
 
 
 void escape_if_needed(imp::inline_state *s) {
@@ -222,7 +220,9 @@ void process_images(imp::inline_state* s) {
         return;
     }
 
+    // Ignore the ! so we can get the data as if it as a link
     s->ignore_n(1);
+
     const std::optional<link_positions> positions = check_if_valid_link(s);
 
     if (!positions) {

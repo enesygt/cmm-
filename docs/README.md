@@ -12,12 +12,31 @@ towards the CommonMakrk spec.
 Checklist
 =========
 
+Inlines 
+-------
+
 * [X] backslash escapes
 * [X] code_spans
 * [X] emphasis
 * [X] strong_emphasis
-* [%] links
-* [ ] images
+* [X] links
+* [X] images
+
+Compoment filtering
+-------------------
+
+* [ ] paragraph
+* [ ] thematic_breaks
+* [ ] atx_headings
+* [ ] setext_headings
+* [ ] indented_code_blocks
+* [ ] fenced_code_blocks
+* [ ] link_reference
+* [ ] container blocks
+
+Html generation
+---------------
+
 * [ ] paragraph
 * [ ] thematic_breaks
 * [ ] atx_headings

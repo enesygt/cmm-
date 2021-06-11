@@ -6,7 +6,7 @@ project(
     cmm++
     LANGUAGES CXX
     VERSION 0.0.0
-)
+    )
 
 set(CMAKE_CXX_STANDARD 17)
 
@@ -16,14 +16,14 @@ include(CTest)
 include(Catch)
 
 option(CMM_DEBUG "Enable debug assertions" OFF)
-option(CMM_TEST "Enable testing" OFF)
+option(CMM_UNIT_TEST "Enable unit testing" OFF)
 
 if (NOT CMM_DEBUG)
     add_compile_definitions(NDEBUG)
 endif()
 
-if (CMM_TEST)
-    add_subdirectory("./tests")
+if (CMM_UNIT_TEST)
+    add_subdirectory("./tests/unit")
 endif ()
 
 add_subdirectory("./src")
