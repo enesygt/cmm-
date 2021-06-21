@@ -6,7 +6,7 @@ namespace cmm {
 /**
  * List of posible types that the markdownd components can be
  */
-enum class component_type {
+enum class markdown_component_type {
     undefined,
     atx_headings,
     setext_heading,

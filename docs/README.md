@@ -1,5 +1,5 @@
 cmm++
-============
+=====
 
 Markdown parcer in C++17
 
@@ -25,7 +25,6 @@ Inlines
 Compoment filtering
 -------------------
 
-* [ ] paragraph
 * [ ] thematic_breaks
 * [ ] atx_headings
 * [ ] setext_headings
@@ -33,6 +32,7 @@ Compoment filtering
 * [ ] fenced_code_blocks
 * [ ] link_reference
 * [ ] container blocks
+* [ ] paragraph
 
 Html generation
 ---------------
