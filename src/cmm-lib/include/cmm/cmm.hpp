@@ -6,6 +6,7 @@
 #include <cmm/util.hpp>
 #include <cmm/components.hpp>
 #include <cmm/inlines.hpp>
+#include <cmm/text_block.hpp>
 
 namespace cmm {
 

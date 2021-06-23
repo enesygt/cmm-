@@ -4,6 +4,9 @@
 
 #include "cmd.hpp"
 
+constexpr bool debug_inlines = false;
+constexpr bool debug_block_separation = false;
+
 int main(int argc, char *argv[]) {
 
     try {
@@ -27,7 +30,21 @@ int main(int argc, char *argv[]) {
 
         std::string source = cmm::full_stream_read(in);
 
-        out << cmm::parce(source);
+        if constexpr (debug_inlines) {
+            out << cmm::process_inlines(source);
+
+        } else if constexpr (debug_block_separation) {
+            auto blocks = cmm::separate_blocks(source);
+            for (const auto& b : blocks) {
+                out << "------------ Found block ----------------\n";
+                out << b << "(BLOCK_END)\n";
+                out << "-----------------------------------------\n";
+            }
+
+        } else {
+            // Normal parsing
+            out << cmm::parce(source);
+        }
         return 0;
 
     } catch (const std::exception &e) {

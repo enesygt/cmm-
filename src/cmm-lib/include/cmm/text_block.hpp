@@ -30,6 +30,8 @@ using text_block = std::string;
 /**
  * Separates the source in text blocks.
  *
+ * **Note:** Every line in the resulting text blocks will end in a \n.
+ *
  * @see cmm::text_block
  */
 std::vector<text_block> separate_blocks(const std::string& source);
