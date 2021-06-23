@@ -1,7 +1,3 @@
 #include <cmm/logger.hpp>
 
-namespace cmm {
-
-Logger log; // NOLINT
-
-} // namespace cmm
+cmm::Logger cmm::log; // NOLINT
