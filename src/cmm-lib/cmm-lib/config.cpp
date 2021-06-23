@@ -1,8 +1,7 @@
 #include <cmm/config.hpp>
 
-namespace cmm::config {
+using cmm::config::imp::config;
 
-namespace imp {
 
 [[nodiscard]] bool config::debug() const noexcept {
     return m_debug;
@@ -13,8 +12,6 @@ config &config::debug(bool d) noexcept {
     return *this;
 }
 
-} // namespace imp
 
-imp::config conf; // NOLINT
+config cmm::config::conf; // NOLINT
 
-} // namespace cmm::config
