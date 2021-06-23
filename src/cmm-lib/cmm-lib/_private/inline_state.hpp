@@ -23,10 +23,10 @@ namespace { // NOLINT
 struct inline_state final {
     const std::string &source; // NOLINT
     std::stringstream &result; // NOLINT
-    size_t &       index;  // NOLINT
+    size_t &           index;  // NOLINT
 
     // Code spans
-    bool       in_code_span = false;     // NOLINT
+    bool   in_code_span = false;     // NOLINT
     size_t number_of_backsticks = 0; // NOLINT
 
     // Emphasis
@@ -87,8 +87,8 @@ struct inline_state final {
 
     // Counts the amount of characters til c apears. Will start advance
     // characters from the current character.
-    [[nodiscard]] size_t
-        distance_to(char c, size_t advance = 0) const noexcept {
+    [[nodiscard]] size_t distance_to(char   c,
+                                     size_t advance = 0) const noexcept {
 
         const size_t starting_position = index + advance;
         size_t       distance = 0;

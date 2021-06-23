@@ -8,26 +8,24 @@
 
 #include "_private/inline_state.hpp"
 
-namespace cmm {
-
 constexpr char escape_char = '\\';
 constexpr char backstick = '`';
 
-namespace {
+using cmm::imp::inline_state;
+using cmm::is_escapable_character;
+using cmm::escape_character;
 
-void escape_if_needed(imp::inline_state *s);
-void process_code_spans(imp::inline_state *s);
-void process_emphasis_and_strong_emphasis(imp::inline_state *s);
-void process_links(imp::inline_state *s);
-void process_images(imp::inline_state *s);
+static void escape_if_needed(inline_state *s);
+static void process_code_spans(inline_state *s);
+static void process_emphasis_and_strong_emphasis(inline_state *s);
+static void process_links(inline_state *s);
+static void process_images(inline_state *s);
 
-} // namespace
-
-std::string process_inlines(const std::string &source) {
+std::string cmm::process_inlines(const std::string &source) {
     std::stringstream result;
-    size_t             i = 0;
+    size_t            i = 0;
 
-    imp::inline_state state = {source, result, i};
+    inline_state state = {source, result, i};
 
     /*
      * We will go character by character, acting acording to the state for the
@@ -78,20 +76,19 @@ std::string process_inlines(const std::string &source) {
     return state.result.str();
 }
 
-namespace {
 
 // Span utils
-void open_span(imp::inline_state *s);
-void close_span(imp::inline_state *s, size_t backsticks_count);
-bool span_can_be_closed(imp::inline_state *s, size_t backsticks_count);
+static void open_span(inline_state *s);
+static void close_span(inline_state *s, size_t backsticks_count);
+static bool span_can_be_closed(inline_state *s, size_t backsticks_count);
 
 
 // Emphasis utils
-bool is_strong_emphasis(const imp::inline_state &s);
-void open_emphasis(imp::inline_state *s);
-void close_emphasis(imp::inline_state *s);
-void open_strong_emphasis(imp::inline_state *s);
-void close_strong_emphasis(imp::inline_state *s);
+static bool is_strong_emphasis(const inline_state &s);
+static void open_emphasis(inline_state *s);
+static void close_emphasis(inline_state *s);
+static void open_strong_emphasis(inline_state *s);
+static void close_strong_emphasis(inline_state *s);
 
 
 // Links and images utils
@@ -108,18 +105,18 @@ struct link_debug_data {
 };
 
 
-// std::ostream &operator<<(std::ostream &o, const link_debug_data &l);
-std::optional<link_positions> check_if_valid_link(imp::inline_state *s);
+// static std::ostream &operator<<(std::ostream &o, const link_debug_data &l);
+static std::optional<link_positions> check_if_valid_link(inline_state *s);
 
-std::string get_link_name(std::stringstream &   source,
-                          const link_positions &positions);
-std::string get_link_url(std::stringstream &   source,
-                         const link_positions &positions);
-std::string get_link_title(std::stringstream &   source,
-                           const link_positions &positions);
+static std::string get_link_name(std::stringstream &   source,
+                                 const link_positions &positions);
+static std::string get_link_url(std::stringstream &   source,
+                                const link_positions &positions);
+static std::string get_link_title(std::stringstream &   source,
+                                  const link_positions &positions);
 
 
-void escape_if_needed(imp::inline_state *s) {
+static void escape_if_needed(inline_state *s) {
     if (!s->next_is_in_range()) {
         s->write_n(1);
         return;
@@ -136,7 +133,7 @@ void escape_if_needed(imp::inline_state *s) {
     s->write_n(2);
 }
 
-void process_code_spans(imp::inline_state *s) {
+static void process_code_spans(inline_state *s) {
     if (s->in_code_span) {
         size_t backsticks_count = s->count_ocurrences(backstick);
 
@@ -153,7 +150,7 @@ void process_code_spans(imp::inline_state *s) {
     open_span(s);
 }
 
-void process_emphasis_and_strong_emphasis(imp::inline_state *s) {
+static void process_emphasis_and_strong_emphasis(inline_state *s) {
 
     const bool   indicates_strong_emphasis = is_strong_emphasis(*s);
     const size_t count = s->count_ocurrences(s->current());
@@ -177,7 +174,7 @@ void process_emphasis_and_strong_emphasis(imp::inline_state *s) {
     open_emphasis(s);
 }
 
-void process_links(imp::inline_state *s) {
+static void process_links(inline_state *s) {
 
     const std::optional<link_positions> positions = check_if_valid_link(s);
     if (!positions) {
@@ -193,7 +190,7 @@ void process_links(imp::inline_state *s) {
     std::string link_name = get_link_name(ss, positions.value());
 
     // Inside the [] there could be more markdown, so lets process that too.
-    link_name = process_inlines(link_name);
+    link_name = cmm::process_inlines(link_name);
 
     const std::string link_url = get_link_url(ss, positions.value());
     const std::string link_title = get_link_title(ss, positions.value());
@@ -208,7 +205,7 @@ void process_links(imp::inline_state *s) {
     s->write("</a>");
 }
 
-void process_images(imp::inline_state* s) {
+static void process_images(inline_state *s) {
     if (!s->next_is_in_range()) {
         s->write_n(1);
         return;
@@ -229,7 +226,8 @@ void process_images(imp::inline_state* s) {
         return;
     }
 
-    std::string image_text = s->source.substr(s->index, positions->total_length);
+    std::string image_text =
+        s->source.substr(s->index, positions->total_length);
     std::stringstream ss(image_text);
 
     const std::string image_name = get_link_name(ss, positions.value());
@@ -246,11 +244,11 @@ void process_images(imp::inline_state* s) {
     s->write("\"/>");
 }
 
-bool span_can_be_closed(imp::inline_state *s, size_t backsticks_count) {
+static bool span_can_be_closed(inline_state *s, size_t backsticks_count) {
     return backsticks_count == s->number_of_backsticks;
 }
 
-void open_span(imp::inline_state *s) {
+static void open_span(inline_state *s) {
     size_t backsticks_count = s->count_ocurrences('`');
     s->number_of_backsticks = backsticks_count;
     s->ignore_n(backsticks_count);
@@ -258,46 +256,45 @@ void open_span(imp::inline_state *s) {
     s->in_code_span = true;
 }
 
-void close_span(imp::inline_state *s, size_t backsticks_count) {
+static void close_span(inline_state *s, size_t backsticks_count) {
     s->ignore_n(backsticks_count);
     s->write("</code>");
     s->in_code_span = false;
 }
 
-bool is_strong_emphasis(const imp::inline_state &s) {
+static bool is_strong_emphasis(const inline_state &s) {
     if (!s.next_is_in_range()) {
         return false;
     }
     return s.current() == s.next();
 }
 
-void open_emphasis(imp::inline_state *s) {
+static void open_emphasis(inline_state *s) {
     s->ignore_n(1);
     s->write("<em>");
     s->in_emphasis = true;
 }
 
-void close_emphasis(imp::inline_state *s) {
+static void close_emphasis(inline_state *s) {
     s->ignore_n(1);
     s->write("</em>");
     s->in_emphasis = false;
 }
 
-void open_strong_emphasis(imp::inline_state *s) {
+static void open_strong_emphasis(inline_state *s) {
     s->ignore_n(2);
     s->write("<strong>");
     s->in_strong_emphasis = true;
 }
 
-void close_strong_emphasis(imp::inline_state *s) {
+static void close_strong_emphasis(inline_state *s) {
     s->ignore_n(2);
     s->write("</strong>");
     s->in_strong_emphasis = false;
 }
 
-std::optional<link_positions> check_if_valid_link(imp::inline_state *s) {
-    constexpr size_t character_not_found =
-        imp::inline_state::character_not_found;
+static std::optional<link_positions> check_if_valid_link(inline_state *s) {
+    constexpr size_t character_not_found = inline_state::character_not_found;
 
     link_positions positions;
 
@@ -391,8 +388,8 @@ std::ostream &operator<<(std::ostream &o, const link_debug_data &l) {
 
 #endif
 
-std::string get_link_name(std::stringstream &   source,
-                          const link_positions &positions) {
+static std::string get_link_name(std::stringstream &   source,
+                                 const link_positions &positions) {
 
     // Ignore the opening [
     source.ignore();
@@ -406,8 +403,8 @@ std::string get_link_name(std::stringstream &   source,
     return link_name;
 }
 
-std::string get_link_url(std::stringstream &   source,
-                         const link_positions &positions) {
+static std::string get_link_url(std::stringstream &   source,
+                                const link_positions &positions) {
 
     // Ignore the ](
     source.ignore(2);
@@ -421,8 +418,8 @@ std::string get_link_url(std::stringstream &   source,
     return link_url;
 }
 
-std::string get_link_title(std::stringstream &   source,
-                           const link_positions &positions) {
+static std::string get_link_title(std::stringstream &   source,
+                                  const link_positions &positions) {
 
     std::string link_title;
     if (positions.title_length != 0) {
@@ -438,7 +435,3 @@ std::string get_link_title(std::stringstream &   source,
     }
     return link_title;
 }
-
-} // namespace
-
-} // namespace cmm
