@@ -1,10 +1,8 @@
 #include <cmm/cmm.hpp>
 
-namespace cmm {
+using cmm::process_inlines;
 
-std::string parce(const std::string &source) {
+std::string cmm::parce(const std::string &source) {
     std::string result = process_inlines(source);
     return result;
 }
-
-} // namespace cmm
