@@ -1,9 +1,8 @@
 #include <sstream>
 #include <cmm/util.hpp>
 
-namespace cmm {
 
-std::string full_stream_read(std::istream &in) {
+std::string cmm::full_stream_read(std::istream &in) {
     std::stringstream ss{};
 
     std::string read_data;
@@ -13,5 +12,3 @@ std::string full_stream_read(std::istream &in) {
 
     return ss.str();
 }
-
-} // namespace cmm
