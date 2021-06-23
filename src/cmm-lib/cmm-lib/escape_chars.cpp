@@ -1,8 +1,7 @@
 #include <cmm/escape_chars.hpp>
 
-namespace cmm {
 
-bool is_escapable_character(char c) noexcept {
+bool cmm::is_escapable_character(char c) noexcept {
     switch (c) {
     case '\\':
     case '\'':
@@ -42,7 +41,7 @@ bool is_escapable_character(char c) noexcept {
     }
 }
 
-const char *escape_character(char c) noexcept {
+const char *cmm::escape_character(char c) noexcept {
     switch (c) {
     case '\\':
         return "&bsol;";
@@ -112,6 +111,3 @@ const char *escape_character(char c) noexcept {
         return "NOT AN ESCAPE CHARATER YOU !#$%&";
     }
 }
-
-
-} // namespace cmm
