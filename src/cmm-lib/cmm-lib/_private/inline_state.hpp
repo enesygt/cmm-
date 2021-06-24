@@ -53,7 +53,7 @@ struct inline_state final {
 
     [[nodiscard]] bool next_is_in_range(void) const noexcept {
         return (index + 1) < source.size();
-    };
+    }
 
     // Writes n characters to the result
     void write_n(size_t n) {
@@ -61,7 +61,7 @@ struct inline_state final {
             assert(this->is_valid());
             result << source[index++];
         }
-    };
+    }
 
     // Writes str to the result
     void write(const char *const str) {
@@ -70,7 +70,7 @@ struct inline_state final {
 
     void ignore_n(size_t n) noexcept {
         index += n;
-    };
+    }
 
     // Counts the times a character is found, from the current position in the
     // source
