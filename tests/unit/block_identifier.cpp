@@ -27,6 +27,7 @@ TEST_CASE("cmm::identify_block_type", "[text_block]") {
 
         for (const auto &b : blocks) {
             const auto type = cmm::identify_block_type(b);
+            INFO(b);
             CHECK(type == cmm::markdown_component_type::atx_headings);
         }
     }
@@ -38,7 +39,7 @@ TEST_CASE("cmm::identify_block_type", "[text_block]") {
 
         for (const auto &b : blocks) {
             const auto type = cmm::identify_block_type(b);
-            CHECK(type == cmm::markdown_component_type::atx_headings);
+            CHECK(type == cmm::markdown_component_type::setext_heading);
         }
     }
 

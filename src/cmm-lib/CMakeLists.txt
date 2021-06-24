@@ -2,6 +2,7 @@ set(cmm_lib_sources ./cmm-lib/cmm.cpp
     ./cmm-lib/text_block.cpp
     ./cmm-lib/util.cpp
     ./cmm-lib/components/base.cpp
+    ./cmm-lib/components/types.cpp
     ./cmm-lib/config.cpp
     ./cmm-lib/logger.cpp
     ./cmm-lib/inlines.cpp

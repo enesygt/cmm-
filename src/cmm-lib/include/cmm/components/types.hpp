@@ -53,6 +53,8 @@ enum class markdown_component_type {
     thematic_break
 };
 
+const char* describe(markdown_component_type m);
+
 } // namespace cmm
 
 #endif

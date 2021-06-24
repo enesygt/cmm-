@@ -68,8 +68,6 @@ else()
             -Wglobal-constructors
             -Wno-exit-time-destructors
             -Wno-documentation-unknown-command
-            -Wno-unused-template
-            -Wno-undef
             # More will be eliminated, in the future.
         )
     else()

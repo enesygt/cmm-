@@ -3,6 +3,6 @@ Checks:
 readability-*,cert-*,clang-analyzer-*,concurrency-*,hicpp-*,portability-*,
 -modernize-use-trailing-return-type,-modernize-redundant-void-arg,
 -readability-implicit-bool-conversion,-bugprone-exception-escape,
--google-runtime-references'
+-google-runtime-references,-cert-dcl21-cpp'
 
 FormatStyle: 'file'

@@ -5,7 +5,8 @@
 #include "cmd.hpp"
 
 constexpr bool debug_inlines = false;
-constexpr bool debug_block_separation = false;
+constexpr bool debug_blocks = true;
+
 
 int main(int argc, char *argv[]) {
 
@@ -33,11 +34,13 @@ int main(int argc, char *argv[]) {
         if constexpr (debug_inlines) {
             out << cmm::process_inlines(source);
 
-        } else if constexpr (debug_block_separation) {
+        } else if constexpr (debug_blocks) {
             auto blocks = cmm::separate_blocks(source);
-            for (const auto& b : blocks) {
+            for (const auto &b : blocks) {
                 out << "------------ Found block ----------------\n";
                 out << b << "(BLOCK_END)\n";
+                out << "Type: " << cmm::describe(cmm::identify_block_type(b))
+                    << '\n';
                 out << "-----------------------------------------\n";
             }
 
