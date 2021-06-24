@@ -4,6 +4,7 @@
 #include <string>
 
 using cmm::text_block;
+using cmm::markdown_component_type;
 
 std::vector<text_block> cmm::separate_blocks(const std::string& source) {
     std::vector<text_block> result;
@@ -41,3 +42,20 @@ std::vector<text_block> cmm::separate_blocks(const std::string& source) {
 
     return result;
 }
+
+static bool is_atx_heading(const text_block& source);
+static bool is_setext_heading(const text_block& source);
+static bool is_indented_code_block(const text_block& source);
+static bool is_fenced_code_block(const text_block& source);
+static bool is_html_block(const text_block& source);
+static bool is_block_quote(const text_block& source);
+static bool is_list(const text_block& source);
+static bool is_thematic_break(const text_block& source);
+
+markdown_component_type cmm::identify_block_type(const text_block &source) {
+    
+    return markdown_component_type::undefined;
+}
+
+// TODO(pabsa): Create tests
+// TODO(pabsa): Implement identifiers

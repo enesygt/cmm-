@@ -1,6 +1,8 @@
 #ifndef CMM_TEXT_BLOCK_HPP
 #define CMM_TEXT_BLOCK_HPP
 
+#include <cmm/components.hpp>
+
 #include <string>
 #include <vector>
 
@@ -35,6 +37,13 @@ using text_block = std::string;
  * @see cmm::text_block
  */
 std::vector<text_block> separate_blocks(const std::string& source);
+
+/**
+ * Identify what type of markdown component is the text block.
+ *
+ * @see cmm::markdown_component_type
+ */
+cmm::markdown_component_type identify_block_type(const text_block& source);
 
 } // namespace cmm
 

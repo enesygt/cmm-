@@ -73,12 +73,6 @@ un indicador del lenguaje.
 
 Si no se cierran duran hasta el final del documento
 
-HTML Block
-----------
-
-Link al [spec](https://spec.commonmark.org/0.29/#html-block), sera lo ultimo
-que voy a implementar creo
-
 Paragraphs
 ----------
 
