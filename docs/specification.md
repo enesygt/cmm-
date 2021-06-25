@@ -4,30 +4,28 @@ Markdown Components
 Thematic Breaks:
 ----------------
 
+They are done using:
+
 ~~~ markdown
     ***
     ---
     ___
 ~~~~
 
-No se valen los siguientes:
+Not the following:
 
 ~~~ markdown
     +++
     ===
 ~~~
 
-Estos pueden partir parafos
-
-Se permiten:
-
-1. Espacios entre los caracteres
-2. Que se metan mas de 3 caracteres
+They allow any amount of spaces between characters. There has to be at least
+3 characters.
 
 ATX Headings
 ------------
 
-Son los headers con los caracteres `#`
+They start with up to 6 `#` characters.
 
 ~~~ markdown
     # foo
@@ -38,14 +36,14 @@ Son los headers con los caracteres `#`
     ###### foo
 ~~~
 
-Nesitan un espacio, y no pueden ser mas de 6
+There needs to be a space between the `#` and the title.
 
-Permiten emphasis, trailing white spaces y indentacion de hasta 3 espacios
+They allow inlines, and can be indented up to 3 spaces.
 
 Setext Headings
 ---------------
 
-Son los headers subrayados, con 3 o mas caracteres subrayando
+These are underlined, using `=` for a `h1`, and `-` for a `h2`.
 
 ~~~ markdown
     Foo *bar*
@@ -56,36 +54,34 @@ Son los headers subrayados, con 3 o mas caracteres subrayando
     ---------
 ~~~
 
-Permite indentar hasta 3 espacios cada cosa, y no pueden estar vacios
+They can be indented up to 3 spaces, and cant be empty. They can span for more
+than one line.
 
 Indented Code Blocks
 --------------------
 
-Empiezan con 4 espacios o un tab. El texto se coloca literal Estos no pueden
-interrumpir parrafos.
+They start with 4 spaces or one tab. These cant interrupt paragraphs.
 
 Fenced Code Blocks
 ------------------
 
-La cerca esta formada por `` ` `` o con `~`. La primera barrera puede contener
-un indicador del lenguaje.
+The fence is formed using `` ` `` or `~`. The first fence can indicate the language.
 
-Si no se cierran duran hasta el final del documento
+If they are not closed they span until the end of the document.
 
 Paragraphs
 ----------
 
-Secuencia de caracteres que puede expandirce por multiples lineas, pero sin
-lineas en blanco. Las lineas se pueden indentar por cualquier cantidad.
+The sequence of characters can span over multiple lines, without blank lines in
+the middle. Lines can be indented up to 3 spaces.
 
 Containers
 ----------
 
 ### Block Quotes
 
-1 a 3 caracteres de indentacion inicial, que puede contener otros componentes
-de markdown. Posiblemente el penultimo en implementar. Link al
-[spec](https://spec.commonmark.org/0.29/#block-quotes)
+Can have up to 3 characters of indentation, and can contain other components
+inside of it. [CommonMark Spec](https://spec.commonmark.org/0.29/#block-quotes)
 
 ### List item
 
@@ -95,16 +91,22 @@ requiere empezar con numeros del 0-9 seguidos de un '.'.
 Si la continuacion lleva minimo 2 espacios lo que este ahi puede ser otro
 compoenente.
 
+For a bulleted list, they have to start with `-`, `+` and `*`. And for it to be
+ordered it need to start with numbers from `1-9` followed by a `.`.
+
+If the continuation starts with 2 spaces, the next element can be another
+component.
+
 ### List
 
-Es una secuencia de list items del mismo tipo
+A sequence of list item of the same type.
 
 Inlines
 -------
 
 ### Backslash escapes
 
-Los caracteres de puntuacion pueden ser escapados
+The punctuation characters that can be escaped.
 
 ~~~ markdown
 \!
@@ -141,16 +143,15 @@ Los caracteres de puntuacion pueden ser escapados
 \~
 ~~~
 
-Con los demas caracteres se trata como un \ normal. Y puede escapar componentes
-de markdown.
+In the rest of cases, the `` \ `` will be treated as a normal character.
 
 ### Code spans
 
-Son los el backskick string es una serie de `` ` ``.
+A back-stick string is a series of `` ` ``.
 
-Un code span empieza con un backskick string y termina con un backskick string.
-Los `\n` son convertidos a espacios. Se le puede hacer trim a un espacio si
-empieza y temina con un espacio.
+A code span starts with a back-stick string, and ends in another one of the
+same length. The `\n` will be turned into spaces. If it starts and ends with
+a space, the space can be trimmed.
 
 ### Emphasis y Stong empasis
 
