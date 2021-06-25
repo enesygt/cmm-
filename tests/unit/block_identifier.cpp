@@ -27,7 +27,7 @@ TEST_CASE("cmm::identify_block_type", "[text_block]") {
 
         for (const auto &b : blocks) {
             const auto type = cmm::identify_block_type(b);
-            INFO(b);
+            INFO(b) // No ;, seems like catch takes care of that
             CHECK(type == cmm::markdown_component_type::atx_headings);
         }
     }
@@ -39,6 +39,7 @@ TEST_CASE("cmm::identify_block_type", "[text_block]") {
 
         for (const auto &b : blocks) {
             const auto type = cmm::identify_block_type(b);
+            INFO(b) // No ;, seems like catch takes care of that
             CHECK(type == cmm::markdown_component_type::setext_heading);
         }
     }
@@ -50,6 +51,7 @@ TEST_CASE("cmm::identify_block_type", "[text_block]") {
 
         for (const auto &b : blocks) {
             const auto type = cmm::identify_block_type(b);
+            INFO(b) // No ;, seems like catch takes care of that
             CHECK(type == cmm::markdown_component_type::indented_code_block);
         }
     }
@@ -61,6 +63,7 @@ TEST_CASE("cmm::identify_block_type", "[text_block]") {
 
         for (const auto &b : blocks) {
             const auto type = cmm::identify_block_type(b);
+            INFO(b) // No ;, seems like catch takes care of that
             CHECK(type == cmm::markdown_component_type::fenced_code_block_opening);
         }
     }
@@ -72,6 +75,7 @@ TEST_CASE("cmm::identify_block_type", "[text_block]") {
 
         for (const auto &b : blocks) {
             const auto type = cmm::identify_block_type(b);
+            INFO(b) // No ;, seems like catch takes care of that
             CHECK(type == cmm::markdown_component_type::fenced_code_block_closing);
         }
 
@@ -97,6 +101,7 @@ TEST_CASE("cmm::identify_block_type", "[text_block]") {
 
         for (const auto &b : blocks) {
             const auto type = cmm::identify_block_type(b);
+            INFO(b) // No ;, seems like catch takes care of that
             CHECK(type == cmm::markdown_component_type::block_quote);
         }
 
@@ -109,6 +114,7 @@ TEST_CASE("cmm::identify_block_type", "[text_block]") {
 
         for (const auto &b : blocks) {
             const auto type = cmm::identify_block_type(b);
+            INFO(b) // No ;, seems like catch takes care of that
             CHECK(type == cmm::markdown_component_type::ordered_list);
         }
 
@@ -121,6 +127,7 @@ TEST_CASE("cmm::identify_block_type", "[text_block]") {
 
         for (const auto &b : blocks) {
             const auto type = cmm::identify_block_type(b);
+            INFO(b) // No ;, seems like catch takes care of that
             CHECK(type == cmm::markdown_component_type::unordered_list);
         }
 
@@ -133,6 +140,7 @@ TEST_CASE("cmm::identify_block_type", "[text_block]") {
 
         for (const auto &b : blocks) {
             const auto type = cmm::identify_block_type(b);
+            INFO(b) // No ;, seems like catch takes care of that
             CHECK(type == cmm::markdown_component_type::thematic_break);
         }
 
@@ -145,6 +153,7 @@ TEST_CASE("cmm::identify_block_type", "[text_block]") {
 
         for (const auto &b : blocks) {
             const auto type = cmm::identify_block_type(b);
+            INFO(b) // No ;, seems like catch takes care of that
             CHECK(type == cmm::markdown_component_type::paragraph);
         }
 
