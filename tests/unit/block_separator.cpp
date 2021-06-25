@@ -7,7 +7,7 @@
 //
 // So: NOLINTNEXTLINE
 TEST_CASE("cmm::separate_blocks", "[text_block]") {
-    SECTION("Resuelve el caso optimo") {
+    SECTION("Solves the optimal case") {
         const std::string source =
             "Hola\n"
             "\n"
@@ -16,10 +16,20 @@ TEST_CASE("cmm::separate_blocks", "[text_block]") {
             "\n"
             "Y este seria el segundo bloque a identificar\n";
 
+        // clang-format off
         const std::vector<cmm::text_block> expected_result = {
-            std::string("Hola\n"),
-            std::string("Este tendria que ser un bloque\npara ser separado\n"),
-            std::string("Y este seria el segundo bloque a identificar\n")};
+            {
+                std::string("Hola\n")
+            },
+            {
+                std::string("Este tendria que ser un bloque\n"),
+                std::string("para ser separado\n")
+            },
+            {
+                std::string("Y este seria el segundo bloque a identificar\n")
+            }
+        };
+        // clang-format on
 
         const std::vector<cmm::text_block> result =
             cmm::separate_blocks(source);
@@ -27,7 +37,7 @@ TEST_CASE("cmm::separate_blocks", "[text_block]") {
         CHECK(result == expected_result);
     }
 
-    SECTION("Retorna un std::vector vacio si no hay texto") {
+    SECTION("Empy vector if no blocks where found") {
         const std::string source{};
         const std::vector<cmm::text_block> expected_result;
 
@@ -37,10 +47,12 @@ TEST_CASE("cmm::separate_blocks", "[text_block]") {
         CHECK(result == expected_result);
     }
 
-    SECTION("Maneja un unico bloque") {
+    SECTION("Manages single block") {
         const std::string source = "Hola\n";
         const std::vector<cmm::text_block> expected_result = {
-            std::string("Hola\n")
+            {
+                std::string("Hola\n")
+            }
         };
 
         const std::vector<cmm::text_block> result =
@@ -49,7 +61,7 @@ TEST_CASE("cmm::separate_blocks", "[text_block]") {
         CHECK(result == expected_result);
     }
 
-    SECTION("Maneja la falta de un salto de linea al final") {
+    SECTION("No '\\n' at the end of the last block") {
         const std::string source =
             "Hola\n"
             "\n"
@@ -58,10 +70,20 @@ TEST_CASE("cmm::separate_blocks", "[text_block]") {
             "\n"
             "Y este seria el segundo bloque a identificar";
 
+        // clang-format off
         const std::vector<cmm::text_block> expected_result = {
-            std::string("Hola\n"),
-            std::string("Este tendria que ser un bloque\npara ser separado\n"),
-            std::string("Y este seria el segundo bloque a identificar\n")};
+            {
+                std::string("Hola\n")
+            },
+            {
+                std::string("Este tendria que ser un bloque\n"),
+                std::string("para ser separado\n")
+            },
+            {
+                std::string("Y este seria el segundo bloque a identificar\n")
+            }
+        };
+        // clang-format on
 
         const std::vector<cmm::text_block> result =
             cmm::separate_blocks(source);
@@ -95,10 +117,20 @@ TEST_CASE("cmm::separate_blocks", "[text_block]") {
             "\n"
             "\n";
 
+        // clang-format off
         const std::vector<cmm::text_block> expected_result = {
-            std::string("Hola\n"),
-            std::string("Este tendria que ser un bloque\npara ser separado\n"),
-            std::string("Y este seria el segundo bloque a identificar\n")};
+            {
+                std::string("Hola\n")
+            },
+            {
+                std::string("Este tendria que ser un bloque\n"),
+                std::string("para ser separado\n")
+            },
+            {
+                std::string("Y este seria el segundo bloque a identificar\n")
+            }
+        };
+        // clang-format on
 
         const std::vector<cmm::text_block> result =
             cmm::separate_blocks(source);

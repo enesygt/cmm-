@@ -31,43 +31,7 @@ namespace cmm {
  * illo!  Earum!                                            |
  * ~~~
  */
-using text_block = std::string;
-
-class line {
-   public:
-    line(const text_block &o, size_t f, size_t l);
-
-    char  operator[](size_t p) const noexcept;
-
-    [[nodiscard]] const text_block & origin_block() const noexcept;
-
-   private:
-    const text_block &origin;
-    size_t            first = 0;
-    size_t            last = 0;
-};
-
-/**
- * A LegacyInputIterator used to go thoug every line of the text_block
- */
-class block_iterator {
-   public:
-    using value_type = line;
-    using reference = value_type &;
-    using pointer = value_type *;
-    using iterator_category = std::input_iterator_tag;
-
-    // No way to specify a begin, end special to text_block, because it is just
-    // a std::string, so we will use this
-    static block_iterator begin(const text_block &t) noexcept;
-    static block_iterator end(const text_block &t) noexcept;
-
-    reference       operator*() const noexcept;
-    block_iterator &operator++();
-    bool            operator==(const block_iterator &other);
-    bool            operator!=(const block_iterator &other);
-    block_iterator  operator++(int);
-};
+using text_block = std::vector<std::string>;
 
 /**
  * Separates the source in text blocks.
