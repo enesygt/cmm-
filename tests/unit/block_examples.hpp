@@ -144,6 +144,22 @@ constexpr const char* const raw_source_ordered_list = R"(
   2. Sub List (2 spaces)
     3. Really deep
 
+1. And the elements
+   can span over mulitiple
+   lines
+2. You can indent them to look like above, or
+you can just leave them as they are.
+
+1. List can
+
+2. Span over
+
+3. Multiple blocks
+
+4. So if the elements are
+   too long you can leave a
+   blank line in between them
+
 )";
 
 constexpr const char* const raw_source_unordered_list = R"(
@@ -157,8 +173,30 @@ constexpr const char* const raw_source_unordered_list = R"(
 * You can
   * Nest them too
     * Using 2 spaces
+    *
+* And the elements
+   can span over mulitiple
+   lines
+*. You can indent them to look like above, or
+you can just leave them as they are.
+
+* List can
+
+* Span over
+
+* Multiple blocks
+
+* So if the elements are
+  too long you can leave a
+  blank line in between them
 )";
 
+/**
+ * Any of '-', '*', '_'.
+ *
+ * * There needs to be at lest 3 of them.
+ * * They can have spaces in between them
+ */
 constexpr const char* const raw_source_thematic_break = R"(
 
 ---
@@ -166,6 +204,19 @@ constexpr const char* const raw_source_thematic_break = R"(
 ***
 
 ___
+
+
+----------------
+
+********************
+
+_____________________
+
+* * * *
+
+- - - - - 
+
+_      _  _ _   _    _
 
 )";
 

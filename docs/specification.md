@@ -23,7 +23,6 @@ Se permiten:
 
 1. Espacios entre los caracteres
 2. Que se metan mas de 3 caracteres
-3. Colocar como miembro de lista
 
 ATX Headings
 ------------
