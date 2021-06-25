@@ -14,9 +14,6 @@ namespace cmm {
  *
  * Basically a paragraph.
  *
- * **Note:** This ones are created from the source using cmm::separate_blocks,
- * every line of the text block is guaranteed to end in a '\n'.
- *
  * ~~~
  * Lorem ipsum dolor sit amet consectetur adipisicing elit. |
  * Facere provident velit, quibusdam, aliquam earum         |
@@ -33,10 +30,9 @@ namespace cmm {
  */
 using text_block = std::vector<std::string>;
 
+
 /**
  * Separates the source in text blocks.
- *
- * **Note:** Every line in the resulting text blocks will end in a \n.
  *
  * @see cmm::text_block
  */
@@ -50,5 +46,7 @@ std::vector<text_block> separate_blocks(const std::string& source);
 cmm::markdown_component_type identify_block_type(const text_block& source);
 
 } // namespace cmm
+
+std::ostream& operator<<(std::ostream& o, const cmm::text_block& t);
 
 #endif

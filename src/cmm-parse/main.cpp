@@ -7,7 +7,6 @@
 constexpr bool debug_inlines = false;
 constexpr bool debug_blocks = true;
 
-
 int main(int argc, char *argv[]) {
 
     try {

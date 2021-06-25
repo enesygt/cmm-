@@ -19,14 +19,14 @@ TEST_CASE("cmm::separate_blocks", "[text_block]") {
         // clang-format off
         const std::vector<cmm::text_block> expected_result = {
             {
-                std::string("Hola\n")
+                std::string("Hola")
             },
             {
-                std::string("Este tendria que ser un bloque\n"),
-                std::string("para ser separado\n")
+                std::string("Este tendria que ser un bloque"),
+                std::string("para ser separado")
             },
             {
-                std::string("Y este seria el segundo bloque a identificar\n")
+                std::string("Y este seria el segundo bloque a identificar")
             }
         };
         // clang-format on
@@ -51,7 +51,7 @@ TEST_CASE("cmm::separate_blocks", "[text_block]") {
         const std::string source = "Hola\n";
         const std::vector<cmm::text_block> expected_result = {
             {
-                std::string("Hola\n")
+                std::string("Hola")
             }
         };
 
@@ -73,14 +73,14 @@ TEST_CASE("cmm::separate_blocks", "[text_block]") {
         // clang-format off
         const std::vector<cmm::text_block> expected_result = {
             {
-                std::string("Hola\n")
+                std::string("Hola")
             },
             {
-                std::string("Este tendria que ser un bloque\n"),
-                std::string("para ser separado\n")
+                std::string("Este tendria que ser un bloque"),
+                std::string("para ser separado")
             },
             {
-                std::string("Y este seria el segundo bloque a identificar\n")
+                std::string("Y este seria el segundo bloque a identificar")
             }
         };
         // clang-format on
@@ -120,14 +120,14 @@ TEST_CASE("cmm::separate_blocks", "[text_block]") {
         // clang-format off
         const std::vector<cmm::text_block> expected_result = {
             {
-                std::string("Hola\n")
+                std::string("Hola")
             },
             {
-                std::string("Este tendria que ser un bloque\n"),
-                std::string("para ser separado\n")
+                std::string("Este tendria que ser un bloque"),
+                std::string("para ser separado")
             },
             {
-                std::string("Y este seria el segundo bloque a identificar\n")
+                std::string("Y este seria el segundo bloque a identificar")
             }
         };
         // clang-format on
