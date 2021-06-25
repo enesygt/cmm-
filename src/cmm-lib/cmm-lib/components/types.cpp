@@ -30,7 +30,5 @@ const char *cmm::describe(markdown_component_type m) {
         return "Unordered List";
     case markdown_component_type::thematic_break:
         return "Thematic Break";
-    default:
-        return "Not a markdown_component_type";
     }
 }
