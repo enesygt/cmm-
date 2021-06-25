@@ -1,8 +1,10 @@
 #include <cmm/text_block.hpp>
 #include <cmm/logger.hpp>
+#include <cmm/syntax_error.hpp>
 
 #include <sstream>
 #include <string>
+#include <algorithm>
 #include <cassert>
 
 using cmm::text_block;
@@ -16,6 +18,14 @@ std::ostream& operator<<(std::ostream& o, const cmm::text_block& t) {
 }
 
 
+std::string operator+(const std::string& rhs, const text_block& lhs) {
+    std::string result(rhs);
+    for (const auto& b : lhs) {
+        result += b;
+        result += '\n';
+    }
+    return result;
+}
 
 std::vector<text_block> cmm::separate_blocks(const std::string& source) {
     std::vector<text_block> result;
@@ -45,12 +55,6 @@ std::vector<text_block> cmm::separate_blocks(const std::string& source) {
         }
     }
 
-    // If the document ends in a single \n or none, then the last block was not
-    // saved
-    // temp = buffer.str();
-    // if (!temp.empty()) {
-    //     result.push_back(std::move(temp));
-    // }
     if (!buffer.empty()) {
         result.push_back(buffer);
     }
@@ -58,7 +62,16 @@ std::vector<text_block> cmm::separate_blocks(const std::string& source) {
     return result;
 }
 
-static bool is_atx_heading(const text_block& source) noexcept;
+size_t cmm::count_indentation(const std::string& s) {
+    for (size_t i = 0; i < s.size(); i++) {
+        if (s[i] != ' ') {
+            return i;
+        }
+    }
+    return std::string::npos;
+}
+
+static bool is_atx_heading(const text_block& source);
 static bool is_setext_heading(const text_block& source);
 static bool is_indented_code_block(const text_block& source);
 static bool is_fenced_code_block(const text_block& source);
@@ -70,39 +83,30 @@ static bool is_unordered_list(const text_block& source);
 static bool is_thematic_break(const text_block& source);
 
 markdown_component_type cmm::identify_block_type(const text_block &source) {
-    // if (is_atx_heading(source)) {
-    //     return markdown_component_type::atx_headings;
-    // }
+    if (is_atx_heading(source)) {
+        return markdown_component_type::atx_headings;
+    }
     
     // If we found nothig special, then it is a paragraph.
     return markdown_component_type::paragraph;
 }
 
-// Check that every line starts with a #
-// static bool is_atx_heading(const text_block& source) noexcept {
-// 
-//     // Every line in the text_block is guaranteed to end in a '\n'.
-//     //
-//     // @see cmm::separate_blocks
-//     const size_t last_newline = source.size() - 1;
-//     assert(source[last_newline] == '\n');
-// 
-//     size_t current = 0;
-//     size_t next_newline = source.find('\n');
-// 
-//     // Find any line that does not start with a '#'
-//     while (true) {
-//         if (source[current] != '#') {
-//             return false;
-//         }
-// 
-//         if (next_newline == last_newline) {
-//             break;
-//         }
-// 
-//         current = next_newline + 1;
-//         next_newline = source.find('\n', current);
-//     }
-// 
-//     return true;
-// }
+static bool is_atx_heading(const text_block& source) {
+    auto starts_with_hash = [&](const std::string& line) -> bool {
+        auto indentation = cmm::count_indentation(line);
+
+        if (indentation == std::string::npos) {
+            std::string error_message = std::string("At block:\n") + source;
+            error_message += "\nThere is la line only formed by white spaces, "
+                             "remove it to create 2 separate blocks";
+            throw cmm::syntax_error(error_message);
+        }
+
+        if (indentation > 3) {
+            return false;
+        }
+
+        return line[indentation] == '#';
+    };
+    return std::all_of(source.begin(), source.end(), starts_with_hash);
+}

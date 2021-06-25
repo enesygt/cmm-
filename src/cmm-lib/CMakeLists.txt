@@ -1,4 +1,5 @@
-set(cmm_lib_sources ./cmm-lib/cmm.cpp 
+set(cmm_lib_sources
+    ./cmm-lib/cmm.cpp 
     ./cmm-lib/text_block.cpp
     ./cmm-lib/util.cpp
     ./cmm-lib/components/base.cpp
@@ -6,6 +7,7 @@ set(cmm_lib_sources ./cmm-lib/cmm.cpp
     ./cmm-lib/config.cpp
     ./cmm-lib/logger.cpp
     ./cmm-lib/inlines.cpp
+    ./cmm-lib/syntax_error.cpp
     ./cmm-lib/escape_chars.cpp)
 
 target_sources(cmm PRIVATE ${cmm_lib_sources})

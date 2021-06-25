@@ -31,4 +31,6 @@ const char *cmm::describe(markdown_component_type m) {
     case markdown_component_type::thematic_break:
         return "Thematic Break";
     }
+
+    return "Not a markdown_component_type";
 }

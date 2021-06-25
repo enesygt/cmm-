@@ -45,8 +45,16 @@ std::vector<text_block> separate_blocks(const std::string& source);
  */
 cmm::markdown_component_type identify_block_type(const text_block& source);
 
+/**
+ * @return The amount of spaces found at the start of a line, or npos if all the
+ * characters are spaces
+ */
+size_t count_indentation(const std::string& s);
+
+
 } // namespace cmm
 
 std::ostream& operator<<(std::ostream& o, const cmm::text_block& t);
+std::string operator+(const std::string& rhs, const cmm::text_block& lhs);
 
 #endif
