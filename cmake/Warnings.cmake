@@ -65,7 +65,7 @@ else()
             -Weverything
             -Wno-c++98-compat-pedantic
             -Wno-c++98-compat
-            -Wglobal-constructors
+            -Wnoglobal-constructors
             -Wno-exit-time-destructors
             -Wno-documentation-unknown-command
             # More will be eliminated, in the future.
