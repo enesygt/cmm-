@@ -139,7 +139,7 @@ constexpr const char* const raw_source_ordered_list = R"(
 1. One
 2. Two
 3. Three
-  
+
 1. One
   2. Sub List (2 spaces)
     3. Really deep
@@ -177,7 +177,7 @@ constexpr const char* const raw_source_unordered_list = R"(
 * And the elements
    can span over mulitiple
    lines
-*. You can indent them to look like above, or
+* You can indent them to look like above, or
 you can just leave them as they are.
 
 * List can
