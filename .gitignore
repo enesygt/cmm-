@@ -3,13 +3,10 @@
 *.lib
 *.pdb
 
-compile_flags.txt
+.cache
+compile_commands.json
 bin/*
 build/*
 generate_bin.bat
 Makefile
 docs/temp.md
-tests/fuzz/compile_flags.txt
-tests/fuzz/corp
-tests/fuzz/corp/*
-
