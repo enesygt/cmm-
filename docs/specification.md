@@ -85,17 +85,10 @@ inside of it. [CommonMark Spec](https://spec.commonmark.org/0.29/#block-quotes)
 
 ### List item
 
-Para que sean bulleted tienen que empezar con -, +, \*. Y para que sea ordenada
-requiere empezar con numeros del 0-9 seguidos de un '.'.
-
-Si la continuacion lleva minimo 2 espacios lo que este ahi puede ser otro
-compoenente.
-
 For a bulleted list, they have to start with `-`, `+` and `*`. And for it to be
 ordered it need to start with numbers from `1-9` followed by a `.`.
 
-If the continuation starts with 2 spaces, the next element can be another
-component.
+If the continuation starts with 2 spaces, the next element can be another list.
 
 ### List
 
