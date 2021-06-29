@@ -72,23 +72,25 @@ Inlines
 Compoment filtering
 -------------------
 
-* [ ] thematic_breaks
-* [ ] atx_headings
-* [ ] setext_headings
-* [ ] indented_code_blocks
-* [ ] fenced_code_blocks
-* [ ] link_reference
-* [ ] container blocks
-* [ ] paragraph
+* [X] atx_heading
+* [ ] setext_heading
+* [ ] indented_code_block
+* [ ] fenced_code_block
+* [ ] fenced_code_block_opening
+* [ ] fenced_code_block_closing
+* [ ] block_quote
+* [ ] ordered_list
+* [ ] unordered_list
+* [ ] thematic_break
 
 Html generation
 ---------------
 
-* [ ] paragraph
-* [ ] thematic_breaks
-* [ ] atx_headings
-* [ ] setext_headings
-* [ ] indented_code_blocks
-* [ ] fenced_code_blocks
-* [ ] link_reference
-* [ ] container blocks
+* [ ] atx_heading
+* [ ] setext_heading
+* [ ] indented_code_block
+* [ ] fenced_code_block
+* [ ] block_quote
+* [ ] ordered_list
+* [ ] unordered_list
+* [ ] thematic_break
