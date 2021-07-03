@@ -51,6 +51,13 @@ cmm::markdown_component_type identify_block_type(const text_block& source);
  */
 size_t count_indentation(const std::string& s);
 
+/**
+*  The indentation of the line must be checked regarding the above line. 
+*/
+bool check_indentation(const std::string &s
+                       ,const size_t indentation
+                       ,const size_t last_indentation);
+
 
 } // namespace cmm
 

@@ -71,6 +71,30 @@ size_t cmm::count_indentation(const std::string& s) {
     return std::string::npos;
 }
 
+bool cmm::check_indentation(const std::string &line,
+                            const size_t indentation,
+                            const size_t last_indentation) {
+
+ 
+    bool indentation_status = true;
+
+    if (indentation == std::string::npos) {
+        std::string error_message = std::string("At block:\n") + line;
+        error_message += "\nThere is la line only formed by white spaces, "
+                         "remove it to create 2 separate blocks";
+        throw cmm::syntax_error(error_message);
+    }
+
+    if ((indentation > size_t{3})
+        && (indentation != last_indentation + size_t{2})
+        && (indentation != last_indentation)) {
+        indentation_status =  false;
+    }
+
+    return indentation_status;
+}
+
+
 static bool is_atx_heading(const text_block& source);
 static bool is_setext_heading(const text_block& source);
 static bool is_indented_code_block(const text_block& source);
@@ -88,6 +112,9 @@ markdown_component_type cmm::identify_block_type(const text_block &source) {
     }
 	if (is_unordered_list(source)) {
         return markdown_component_type::unordered_list;
+    }
+    if (is_ordered_list(source)) {
+        return markdown_component_type::ordered_list;
     }
     
     // If we found nothig special, then it is a paragraph.
@@ -116,33 +143,54 @@ static bool is_atx_heading(const text_block& source) {
 
 static bool is_unordered_list(const text_block &source) {
 
-    bool list_flag = false;
+    bool unordered_list_flag = false;
 
-    size_t inside_indentation = 0;
+    size_t last_indentation = 0;
 
-    for (const auto &i : source) {
+    for (const auto &line : source) {
 
-        auto indentation = cmm::count_indentation(i);
+        auto indentation = cmm::count_indentation(line);
 
-        if (indentation == std::string::npos) {
-            std::string error_message = std::string("At block:\n") + source;
-            error_message += "\nThere is la line only formed by white spaces, "
-                             "remove it to create 2 separate blocks";
-            throw cmm::syntax_error(error_message);
+        if (false== cmm::check_indentation(line, indentation, last_indentation)) {
+            unordered_list_flag = false;
+            break;
         }
 
-        if ((indentation > 3)
-            && (indentation != inside_indentation + size_t{2})
-            && (indentation != inside_indentation)) {
-            return false;
-        }
-
-         if (i[indentation] == '*' || i[indentation] == '-'
-            || i[indentation] == '+') {
-            list_flag = true;
-            inside_indentation = indentation;
+         if (line[indentation] == '*' || line[indentation] == '-'
+            || line[indentation] == '+') {
+            unordered_list_flag = true;
+            last_indentation = indentation;
         }
     }
 
-    return list_flag;
+    return unordered_list_flag;
 }
+
+static bool is_ordered_list(const text_block &source) {
+
+    size_t last_indentation = 0;
+    static bool ordered_list_flag = false;
+
+    for (const auto &line : source) {
+
+        auto indentation = cmm::count_indentation(line);
+
+        if (false == cmm::check_indentation(line, indentation, last_indentation))
+        {
+            ordered_list_flag = false;
+            break;
+        }
+
+         last_indentation = indentation;
+ 
+         if ('1' == line[indentation] && 
+            '.' == line[indentation + size_t{1}]) {
+           ordered_list_flag = true;
+         }
+       
+
+    }
+
+    return ordered_list_flag;
+}
+
