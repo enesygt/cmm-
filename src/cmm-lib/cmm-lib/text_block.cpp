@@ -110,3 +110,36 @@ static bool is_atx_heading(const text_block& source) {
     };
     return std::all_of(source.begin(), source.end(), starts_with_hash);
 }
+
+static bool is_unordered_list(const text_block &source) {
+
+    bool list_flag = false;
+
+    size_t inside_indentation = 0;
+
+    for (const auto &i : source) {
+
+        auto indentation = cmm::count_indentation(i);
+
+        if (indentation == std::string::npos) {
+            std::string error_message = std::string("At block:\n") + source;
+            error_message += "\nThere is la line only formed by white spaces, "
+                             "remove it to create 2 separate blocks";
+            throw cmm::syntax_error(error_message);
+        }
+
+        if ((indentation > 3)
+            && (indentation != inside_indentation + size_t{2})
+            && (indentation != inside_indentation)) {
+            return false;
+        }
+
+         if (i[indentation] == '*' || i[indentation] == '-'
+            || i[indentation] == '+') {
+            list_flag = true;
+            inside_indentation = indentation;
+        }
+    }
+
+    return list_flag;
+}
