@@ -86,6 +86,9 @@ markdown_component_type cmm::identify_block_type(const text_block &source) {
     if (is_atx_heading(source)) {
         return markdown_component_type::atx_headings;
     }
+	if (is_unordered_list(source)) {
+        return markdown_component_type::unordered_list;
+    }
     
     // If we found nothig special, then it is a paragraph.
     return markdown_component_type::paragraph;
