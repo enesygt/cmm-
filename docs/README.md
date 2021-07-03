@@ -80,7 +80,7 @@ Compoment filtering
 * [ ] fenced_code_block_closing
 * [ ] block_quote
 * [ ] ordered_list
-* [ ] unordered_list
+* [X] unordered_list
 * [ ] thematic_break
 
 Html generation
