@@ -117,6 +117,14 @@ TEST_CASE("cmm::identify_block_type", "[text_block]") {
                 raw_source_unordered_list,
                 cmm::markdown_component_type::unordered_list);
         }
+        SECTION("Syntax Errors") {
+            const char *src = R"(
+* Check me first
+                                        
+         - There must be a problem in the above line
+            )";
+            check_syntax_errors(src);
+        }
     }
 
     SECTION("Thematic Break") {
